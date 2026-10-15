@@ -1,14 +1,13 @@
-group = "app.template"
+group = "app.mightymorphing"
 
 patches {
-    // TODO: Update this section with your project details.
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
-        contact = "na"
-        website = "na"
+        name = "Mighty Morphing Patches"
+        description = "Patches for Joey for Reddit 2.1.6.5"
+        source = "https://github.com/ZoomSass/Mighty-Morphing"
+        author = "ZoomSass"
+        contact = "https://github.com/ZoomSass/Mighty-Morphing"
+        website = "https://github.com/ZoomSass/Mighty-Morphing"
         license = "GPLv3"
     }
 }
