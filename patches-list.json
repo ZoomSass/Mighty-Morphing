@@ -1,5 +1,110 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "0.0.0",
-  "patches": []
+  "version": "1.0.0-dev.1",
+  "patches": [
+    {
+      "name": "Dismiss without tearing",
+      "description": "Keeps a dragged photo on a software layer so the dismiss does not tear. Video stays on the hardware path. On Android 11 and newer the viewer window is see-through.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "o.o.joey",
+          "name": "Joey",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#FF6A00",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2.1.6.5",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "RedGifs with sound",
+      "description": "Plays the HD or SD RedGifs file instead of the silent one, and skips Reddit's silent preview.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "o.o.joey",
+          "name": "Joey",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#FF6A00",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2.1.6.5",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Rename to JoeyX",
+      "description": "Changes the package to o.o.joeyx and the launcher name to JoeyX. Leave this off to keep o.o.joey and combine these patches with other Joey patches. Morphe will not see the renamed APK as Joey.",
+      "default": false,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "o.o.joey",
+          "name": "Joey",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#FF6A00",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2.1.6.5",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Skip ads and checks",
+      "description": "Turns ads off, skips the purchase prompts, and drops the update nag, Play installer check, and Crashlytics reporting.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "o.o.joey",
+          "name": "Joey",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#FF6A00",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2.1.6.5",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    }
+  ]
 }
