@@ -1,15 +1,3 @@
-## [1.1.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.1.0...v1.1.1) (2026-10-18)
-
-### 🐛 Bug Fixes
-
-* list the patches as plain bullets ([a47d2b2](https://github.com/ZoomSass/Mighty-Morphing/commit/a47d2b2aeb8ff549897c7bd2fab9b08ab894b88d))
-
-## [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.0...v1.1.0) (2026-10-18)
-
-### ✨ New Features
-
-* publish the Joey patches from the working builds ([70f6eab](https://github.com/ZoomSass/Mighty-Morphing/commit/70f6eab6e5c9c2bd9d4f4bda898427b99f10129d))
-
 ## 1.0.0 (2026-10-15)
 
 ### ✨ New Features
