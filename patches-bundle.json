@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-18T21:21:54",
-  "description": "## [1.0.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.3...v1.0.4) (2026-10-18)\n\n### 🐛 Bug Fixes\n\n* compile the rebuilt method body on Morphe 2.0 ([958b247](https://github.com/ZoomSass/Mighty-Morphing/commit/958b247db2ffc31153d4ee4f79978cb3298c1b1a))\n* rebuild methods that need more registers on Morphe 2.0 ([2e8f157](https://github.com/ZoomSass/Mighty-Morphing/commit/2e8f157fe3363b51d6fdd4e17c891b313d539ec4))",
-  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.0.4/patches-1.0.4.mpp",
+  "created_at": "2026-10-18T21:37:21",
+  "description": "## [1.0.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.4...v1.0.5) (2026-10-18)\n\n### 🐛 Bug Fixes\n\n* replace methods whose try blocks cannot be cleared ([48276a4](https://github.com/ZoomSass/Mighty-Morphing/commit/48276a4856eacc83086b4a2bc542b4a1a1494533))",
+  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.0.5/patches-1.0.5.mpp",
   "signature_download_url": "",
-  "version": "1.0.4"
+  "version": "1.0.5"
 }

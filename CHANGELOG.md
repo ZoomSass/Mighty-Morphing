@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.4...v1.0.5) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+* replace methods whose try blocks cannot be cleared ([48276a4](https://github.com/ZoomSass/Mighty-Morphing/commit/48276a4856eacc83086b4a2bc542b4a1a1494533))
+
 ## [1.0.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.3...v1.0.4) (2026-10-18)
 
 ### 🐛 Bug Fixes
