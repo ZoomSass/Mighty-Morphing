@@ -2,19 +2,23 @@
 
 ![Mighty Morphing Patches](banner.png)
 
-Patches for Joey for Reddit 2.1.6.5. Add the source in Morphe with this link:
+Patches for the last Joey for Reddit release, 2.1.6.5 (the original `o.o.joey` app). Add the source in Morphe with this link:
 
 https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 
-They target the original Joey package, `o.o.joey`, version 2.1.6.5.
+**Skip ads and checks**: Removes ads everywhere and also drops the Play Store install check and crash reporting.
 
-**Skip ads and checks** is on by default. Ads stay off, including inline ads. The purchase prompt, the rate-the-app prompt, and the purchase-error dialog are skipped. The home-screen update nag is removed, the Play installer check is emptied, and Crashlytics reporting is turned into no-ops.
+**RedGifs with sound**: RedGifs clips play with their sound, in HD when it's available.
 
-**RedGifs with sound** is on by default. A clip asks RedGifs for a temporary token, then plays the HD file, or the SD file if HD is missing. Silent files and Reddit's silent preview are skipped.
+**Dismiss without tearing**: Swiping a photo away to close it looks smooth instead of tearing.
 
-**Dismiss without tearing** is on by default. While a still photo is dragged away, it is drawn on a software layer so the picture does not tear. Video stays on the hardware path. On Android 11 and newer the viewer window is see-through.
+**Inline comment media**: Shows GIFs, pictures and subreddit emojis right in the comments instead of as links, kept small so threads stay readable. Tap a GIF or picture to open it full size, or tap anywhere else to collapse the comment like normal.
 
-**Rename to JoeyX** is off by default. Turn it on to use package `o.o.joeyx`, the matching permission and provider names, and the launcher name JoeyX. That installs beside the original app. Leave it off and a normal patch run stays `o.o.joey`, so it can still be combined with other Joey patches. After the rename, Morphe will not see that APK as Joey.
+**Log in with your own client ID**: Lets Joey log in with another app's client ID, for when Joey's own login stops working. Sign in to RedReader once, then paste the App ID from Reddit's "you authorized an app" email into this patch's settings (Expert mode). Leave it empty and nothing changes.
+
+**Fix login page**: Makes Reddit's login page load and work properly inside Joey, and clears the cookie banner out of the way.
+
+Any issues or comments, open one here: https://github.com/ZoomSass/Mighty-Morphing/issues
 
 <!-- PATCHES_START EXPANDED -->
 

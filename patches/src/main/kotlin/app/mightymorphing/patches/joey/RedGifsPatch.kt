@@ -205,7 +205,7 @@ private val redgifsStringPatch = resourcePatch {
 @Suppress("unused")
 val redgifsWithSoundPatch = bytecodePatch(
     name = "RedGifs with sound",
-    description = "Plays the HD or SD RedGifs file instead of the silent one, and skips Reddit's silent preview.",
+    description = "RedGifs clips play with their sound, in HD when it's available. Joey no longer falls back to the silent version or Reddit's muted preview. 😈",
 ) {
     compatibleWith(JOEY)
     dependsOn(redgifsStringPatch)
