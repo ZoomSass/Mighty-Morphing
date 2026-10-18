@@ -205,3 +205,85 @@ object ViewerWindowFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf("Landroid/app/Activity;"),
 )
+
+object CommentHtmlFingerprint : Fingerprint(
+    definingClass = "Ln9/k;",
+    name = "W",
+    returnType = "Ljava/lang/String;",
+    parameters = listOf(),
+    strings = listOf("body_html"),
+)
+
+object CommentSpannableFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/CustomViews/HTMLTextView;",
+    name = "setSpannable",
+    returnType = "V",
+    parameters = listOf("Landroid/text/SpannableStringBuilder;"),
+)
+
+object CommentLinkTouchFingerprint : Fingerprint(
+    definingClass = "Lxa/n;",
+    name = "onTouchEvent",
+    returnType = "Z",
+    parameters = listOf("Landroid/widget/TextView;", "Landroid/text/Spannable;", "Landroid/view/MotionEvent;"),
+)
+
+object ClientIdFingerprint : Fingerprint(
+    definingClass = "Le9/b;",
+    name = "a",
+    returnType = "Ljava/lang/String;",
+    parameters = listOf(),
+    filters = listOf(literal(0x7f130807)),
+)
+
+object UserAgentFingerprint : Fingerprint(
+    definingClass = "Le9/b;",
+    name = "c",
+    returnType = "Ljava/lang/String;",
+    parameters = listOf(),
+    strings = listOf("2.1.6.5"),
+)
+
+object CredentialsFingerprint : Fingerprint(
+    definingClass = "Lt7/a;",
+    name = "<init>",
+    returnType = "V",
+    parameters = listOf(
+        "Lnet/dean/jraw/http/a;",
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+        "Ljava/util/UUID;",
+        "Ljava/lang/String;",
+    ),
+)
+
+object LoginCodeCheckFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/LoginActivity;",
+    name = "s3",
+    returnType = "Z",
+    parameters = listOf("Ljava/lang/String;"),
+    strings = listOf("code="),
+)
+
+object LoginOverrideFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/LoginActivity\$d;",
+    name = "shouldOverrideUrlLoading",
+    returnType = "Z",
+    parameters = listOf("Landroid/webkit/WebView;", "Ljava/lang/String;"),
+)
+
+object LoginPageLoadFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/LoginActivity;",
+    name = "v3",
+    returnType = "V",
+    parameters = listOf(),
+)
+
+object LoginPageFinishedFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/LoginActivity\$d;",
+    name = "onPageFinished",
+    returnType = "V",
+    parameters = listOf("Landroid/webkit/WebView;", "Ljava/lang/String;"),
+)

@@ -1,6 +1,5 @@
 package app.mightymorphing.patches.shared
 
-import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
@@ -27,9 +26,19 @@ private fun MutableMethodImplementation.setRegisterCount(count: Int) {
     field.setInt(this, count)
 }
 
+private fun MutableMethodImplementation.clearTryBlocks() {
+    if (tryBlocks.isEmpty()) return
+    val field = javaClass.declaredFields.firstOrNull { it.name == "tryBlocks" }
+        ?: throw PatchException("This smali library has no try-block list")
+    field.isAccessible = true
+    val blocks = field.get(this) as? MutableList<*>
+        ?: throw PatchException("This smali library has no editable try-block list")
+    blocks.clear()
+}
+
 fun MutableMethod.clearBody() {
     val impl = implementation ?: throw PatchException("${where()} has no body")
-    (impl.tryBlocks as MutableList<*>).clear()
+    impl.clearTryBlocks()
     val count = impl.instructions.size
     if (count > 0) {
         removeInstructions(count)
@@ -44,7 +53,7 @@ fun MutableMethod.setBody(registerCount: Int, smali: String) {
     val impl = implementation ?: throw PatchException("${where()} has no body")
     clearBody()
     impl.setRegisterCount(registerCount)
-    addInstructions(0, smali.trimIndent())
+    addInstructionsWithLabels(0, smali.trimIndent())
 }
 
 fun MutableMethod.returnVoid() {
@@ -87,10 +96,5 @@ fun MutableMethod.indexOfString(value: String): Int {
 }
 
 fun MutableMethod.insertAt(index: Int, smali: String, vararg labels: ExternalLabel) {
-    val body = smali.trimIndent()
-    if (labels.isEmpty()) {
-        addInstructions(index, body)
-    } else {
-        addInstructionsWithLabels(index, body, *labels)
-    }
+    addInstructionsWithLabels(index, smali.trimIndent(), *labels)
 }

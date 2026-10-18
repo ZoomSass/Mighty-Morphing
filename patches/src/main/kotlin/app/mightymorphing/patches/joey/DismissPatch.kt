@@ -55,7 +55,7 @@ private const val VIEWER_WINDOW = """
 @Suppress("unused")
 val dismissWithoutTearingPatch = bytecodePatch(
     name = "Dismiss without tearing",
-    description = "Keeps a dragged photo on a software layer so the dismiss does not tear. Video stays on the hardware path. On Android 11 and newer the viewer window is see-through.",
+    description = "Swiping a photo away to close it looks smooth instead of tearing, and on Android 11 and newer you can see the feed behind it as it goes.",
 ) {
     compatibleWith(JOEY)
 
