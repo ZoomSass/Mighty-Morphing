@@ -89,7 +89,7 @@ def patches_list(patches):
     lines = []
     for p in sorted(patches, key=lambda x: x["name"]):
         desc = " ".join((p.get("description") or "").split())
-        lines.append(f"- **{p['name']}.** {desc}".rstrip())
+        lines.append(f"- <span style=\"color:#d85a45\">**{p['name']}:**</span> {desc}".rstrip())
     return "\n".join(lines)
 
 
