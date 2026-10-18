@@ -4,6 +4,10 @@
 
 Patches for Joey for Reddit (last published release)
 
+The original app is here
+
+https://apkpure.com/joey-for-reddit/o.o.joey
+
 Click the following to add to morphe sources
 
 https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
