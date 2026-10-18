@@ -21,8 +21,24 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 Any issues or comments, open one here: https://github.com/ZoomSass/Mighty-Morphing/issues
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0-dev.1](https://github.com/ZoomSass/Mighty-Morphing/releases/tag/v1.0.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+<details open>
+<summary>📦 Joey&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
+<br>
 
-<!-- Do not modify this section by hand. The patch list is generated when release.yml creates a new release. -->
+**🎯 Supported versions:**
+
+| 2.1.6.5 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Dismiss without tearing](#dismiss-without-tearing) | Keeps a dragged photo on a software layer so the dismiss does not tear. Video stays on the hardware path. On Android 11 and newer the viewer window is see-through. |  |
+| [RedGifs with sound](#redgifs-with-sound) | Plays the HD or SD RedGifs file instead of the silent one, and skips Reddit's silent preview. |  |
+| [Rename to JoeyX](#rename-to-joeyx) | Changes the package to o.o.joeyx and the launcher name to JoeyX. Leave this off to keep o.o.joey and combine these patches with other Joey patches. Morphe will not see the renamed APK as Joey. |  |
+| [Skip ads and checks](#skip-ads-and-checks) | Turns ads off, skips the purchase prompts, and drops the update nag, Play installer check, and Crashlytics reporting. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 
