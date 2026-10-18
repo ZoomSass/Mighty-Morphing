@@ -43,21 +43,31 @@ private fun MutableMethodImplementation.tryRaiseRegisterCount(count: Int): Boole
     }.getOrDefault(false)
 }
 
-private fun MutableMethodImplementation.clearTryBlocks() {
-    if (tryBlocks.isEmpty()) return
-    val fields = declaredFieldsDeep()
-    val field = fields.firstOrNull { it.name == "tryBlocks" }
-        ?: fields.singleOrNull { List::class.java.isAssignableFrom(it.type) && it.name != "instructionList" }
-        ?: throw PatchException("This smali library has no try-block list")
-    field.isAccessible = true
-    val blocks = field.get(this) as? MutableList<*>
-        ?: throw PatchException("This smali library has no editable try-block list")
-    blocks.clear()
+/**
+ * Stable Morphe keeps try blocks in an ArrayList named tryBlocks.
+ * 2.0 renames that field. Returns false when the blocks are still there,
+ * so the caller can rebuild the method instead of editing the old list.
+ */
+private fun MutableMethodImplementation.tryClearTryBlocks(): Boolean {
+    if (tryBlocks.isEmpty()) return true
+    val field = declaredFieldsDeep().firstOrNull { candidate ->
+        candidate.name == "tryBlocks" &&
+            !java.lang.reflect.Modifier.isStatic(candidate.modifiers) &&
+            java.util.ArrayList::class.java.isAssignableFrom(candidate.type)
+    } ?: return false
+    return runCatching {
+        field.isAccessible = true
+        val blocks = field.get(this) as? java.util.ArrayList<*> ?: return false
+        blocks.clear()
+        tryBlocks.isEmpty()
+    }.getOrDefault(false)
 }
 
 fun MutableMethod.clearBody() {
     val impl = implementation ?: throw PatchException("${where()} has no body")
-    impl.clearTryBlocks()
+    if (!impl.tryClearTryBlocks()) {
+        throw PatchException("${where()} try blocks cannot be cleared")
+    }
     val count = impl.instructions.size
     if (count > 0) {
         removeInstructions(count)
@@ -82,14 +92,18 @@ private fun MutableMethod.sameSignature(other: MutableMethod): Boolean =
 
 /**
  * Replace a method body on any Morphe release.
- * Stable releases can raise the register count in place. 2.0 hides that field,
- * so the method is rebuilt with the public constructor and swapped onto the class.
+ * Stable releases can edit the method in place. 2.0 hides the register count and
+ * the try-block list, so the method is rebuilt and swapped onto the class.
  */
 fun BytecodePatchContext.writeBody(method: MutableMethod, registerCount: Int, smali: String) {
     val text = smali.trimIndent()
     val impl = method.implementation ?: throw PatchException("${method.definingClass}->${method.name} has no body")
-    if (impl.registerCount >= registerCount || impl.tryRaiseRegisterCount(registerCount)) {
-        method.clearBody()
+    val fits = impl.registerCount >= registerCount || impl.tryRaiseRegisterCount(registerCount)
+    if (fits && impl.tryClearTryBlocks()) {
+        val count = impl.instructions.size
+        if (count > 0) {
+            method.removeInstructions(count)
+        }
         method.addInstructionsWithLabels(0, text)
         return
     }
