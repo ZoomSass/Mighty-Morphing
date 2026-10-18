@@ -33,7 +33,7 @@ private const val PREVIOUS_CRASH_BODY = """
 @Suppress("unused")
 val skipAdsAndChecksPatch = bytecodePatch(
     name = "Skip ads and checks",
-    description = "Removes ads everywhere, including between posts, and stops the nags: no prompts to buy, rate the app or update. Also drops the Play Store install check and crash reporting.",
+    description = "Removes ads everywhere and also drops the Play Store install check and crash reporting.",
 ) {
     compatibleWith(JOEY)
 

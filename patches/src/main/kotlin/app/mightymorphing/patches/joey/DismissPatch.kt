@@ -55,7 +55,7 @@ private const val VIEWER_WINDOW = """
 @Suppress("unused")
 val dismissWithoutTearingPatch = bytecodePatch(
     name = "Dismiss without tearing",
-    description = "Swiping a photo away to close it looks smooth instead of tearing, and on Android 11 and newer you can see the feed behind it as it goes.",
+    description = "Swiping a photo away to close it looks smooth instead of tearing.",
 ) {
     compatibleWith(JOEY)
 

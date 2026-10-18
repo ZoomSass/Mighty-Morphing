@@ -38,8 +38,7 @@ with open(json_path, encoding="utf-8") as f:
 
 
 def pkg_emoji(pkg):
-    """Return a standard package emoji regardless of the package name."""
-    return "📦"
+    return ""
 
 # Group patches by package; patches with no compatiblePackages are universal.
 # JSON structure: compatiblePackages is a list of objects with
@@ -74,103 +73,53 @@ def anchor(name):
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", name.lower())).strip("-")
 
 
-def patches_table(patches):
-    """Render a sorted markdown table of patches with name, description, and options."""
-    rows = [
-        "| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |",
-        "|----------|----------------|-----------|",
-    ]
-    for p in sorted(patches, key=lambda x: x["name"]):
-        a = anchor(p["name"])
-        options = p.get("options") or []
-        if options:
-            # Show only option titles as a bullet list
-            parts = [opt.get("title") or opt.get("key") or "" for opt in options]
-            opts_cell = "<br>".join(f"• {t}" for t in parts)
-        else:
-            opts_cell = ""
-        desc = (p.get("description") or "").replace("\n", "<br>")
-        rows.append(f"| [{p['name']}](#{a}) | {desc} | {opts_cell} |")
-    return "\n".join(rows)
-
-
-def versions_table(targets):
-    """Render a markdown table of supported versions.
-    Experimental versions get a 🧪 prefix.
-    Versions with a description get it shown in a second row below.
-    """
-    if not targets:
-        return ""
-
-    cells = []
+def version_line(targets):
+    versions = []
     for t in targets:
-        ver   = t["version"]
-        if ver is None:
+        ver = t.get("version")
+        if not ver:
             continue
-        label = f"🧪&nbsp;{ver}" if t.get("isExperimental") else ver
-        cells.append(label)
-
-    if not cells:
+        versions.append(f"{ver} (experimental)" if t.get("isExperimental") else ver)
+    if not versions:
         return ""
-
-    header = "| " + " | ".join(cells) + " |"
-    sep = "| " + " | ".join(":---:" for _ in cells) + " |"
-    rows = [header, sep]
-
-    # Optional description row — only rendered if at least one target has one
-    descs = [(t.get("description") or "").replace("\n", "<br>") for t in targets]
-    if any(descs):
-        rows.append("| " + " | ".join(descs) + " |")
-
-    return "\n".join(rows)
+    return "Works with " + ", ".join(versions) + "."
 
 
-def spoiler(label, count, targets, tbl, expanded=False):
-    """Wrap a patches table in a <details> spoiler with a versions sub-table.
-    If expanded=True, the spoiler is open by default (for repos with few patches).
-    """
-    noun = "patch" if count == 1 else "patches"
-    vtbl = versions_table(targets)
-    versions_section = f"**🎯 Supported versions:**\n\n{vtbl}\n\n" if vtbl else ""
-    tag = "<details open>" if expanded else "<details>"
-    return f"""{tag}
-<summary>{label}&nbsp;&nbsp;•&nbsp;&nbsp;{count} {noun}</summary>
-<br>
-
-{versions_section}{tbl}
-
-</details>"""
+def patches_list(patches):
+    lines = []
+    for p in sorted(patches, key=lambda x: x["name"]):
+        desc = " ".join((p.get("description") or "").split())
+        lines.append(f"- {p['name']}. {desc}".rstrip())
+        for opt in p.get("options") or []:
+            title = opt.get("title") or opt.get("key") or ""
+            detail = " ".join((opt.get("description") or "").split())
+            if detail:
+                lines.append(f"  - {title}: {detail}")
+            elif title:
+                lines.append(f"  - {title}")
+    return "\n".join(lines)
 
 
 def build_content(expanded=False):
-    """Build the full generated patches section."""
     lines = [
-        f"> **[v{ver}](https://github.com/{owner}/{repo}/releases/tag/v{ver})**"
-        f"&nbsp;&nbsp;•&nbsp;&nbsp;`{branch}`&nbsp;&nbsp;•&nbsp;&nbsp;"
-        f"{total} patches total"
+        f"Release [{ver}](https://github.com/{owner}/{repo}/releases/tag/v{ver}) on `{branch}`. {total} patches."
     ]
-
-    # One spoiler per app, in the order they appear in the JSON
     for pkg, entry in by_pkg.items():
         patches = list(entry["patches"].values())
-        label   = f"{entry['emoji']} {entry['name']}"
-        lines.append(spoiler(label, len(patches), entry["targets"], patches_table(patches), expanded))
         lines.append("")
-
-    # Universal patches (no specific app)
+        lines.append(entry["name"])
+        versions = version_line(entry["targets"])
+        if versions:
+            lines.append("")
+            lines.append(versions)
+        lines.append("")
+        lines.append(patches_list(patches))
     if universal:
-        uni_patches = list(universal.values())
-        noun = "patch" if len(uni_patches) == 1 else "patches"
-        tag  = "<details open>" if expanded else "<details>"
-        lines.append(f"""{tag}
-<summary>🌐 Universal&nbsp;&nbsp;•&nbsp;&nbsp;{len(uni_patches)} {noun}</summary>
-<br>
-
-{patches_table(uni_patches)}
-
-</details>""")
         lines.append("")
-
+        lines.append("Other")
+        lines.append("")
+        lines.append(patches_list(universal.values()))
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -192,7 +141,7 @@ if not marker_match or END_MARKER not in readme:
     # Fallback: print to stdout so CI can catch the issue
     print(build_content(expanded=False))
     sys.stderr.write(
-        f"⚠️  Markers <!-- PATCHES_START [EXPANDED] --> / {END_MARKER} not found in {readme_path}. "
+        f"Markers <!-- PATCHES_START [EXPANDED] --> / {END_MARKER} not found in {readme_path}. "
         "Printed to stdout instead.\n"
     )
     sys.exit(1)
@@ -224,4 +173,4 @@ new_readme = re.sub(
     flags=re.DOTALL,
 )
 readme_path.write_text(new_readme, encoding="utf-8")
-print(f"✅ Injected patches section into {readme_path} (v{ver}, branch={branch}, {total} patches, expanded={expanded})")
+print(f"Injected patches section into {readme_path} (v{ver}, branch={branch}, {total} patches, expanded={expanded})")

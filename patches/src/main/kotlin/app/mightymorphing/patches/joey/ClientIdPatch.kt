@@ -41,7 +41,7 @@ val clientIdPatch = bytecodePatch(
         "org.quantumbadger.redreader/1.25.1",
         null,
         "User agent",
-        "How Joey introduces itself to Reddit. The default matches RedReader.",
+        "Sent with Reddit requests. The default is RedReader's.",
         true,
     )
 
