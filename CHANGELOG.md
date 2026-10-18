@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.2...v1.0.3) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+* raise the register count on Morphe 2.0 and leave the client ID patch off ([02820b3](https://github.com/ZoomSass/Mighty-Morphing/commit/02820b32845b1844b7556b45cf2badfa297263bf))
+
 ## [1.0.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.1...v1.0.2) (2026-10-18)
 
 ### 🐛 Bug Fixes

@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-18T20:55:12",
-  "description": "## [1.0.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.1...v1.0.2) (2026-10-18)\n\n### 🐛 Bug Fixes\n\n* build a new method when Morphe 2.0 hides the register count ([f55ad2b](https://github.com/ZoomSass/Mighty-Morphing/commit/f55ad2b62f06c5eace7a96126b3c14774508af69))",
-  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.0.2/patches-1.0.2.mpp",
+  "created_at": "2026-10-18T21:02:55",
+  "description": "## [1.0.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.2...v1.0.3) (2026-10-18)\n\n### 🐛 Bug Fixes\n\n* raise the register count on Morphe 2.0 and leave the client ID patch off ([02820b3](https://github.com/ZoomSass/Mighty-Morphing/commit/02820b32845b1844b7556b45cf2badfa297263bf))",
+  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.0.3/patches-1.0.3.mpp",
   "signature_download_url": "",
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
