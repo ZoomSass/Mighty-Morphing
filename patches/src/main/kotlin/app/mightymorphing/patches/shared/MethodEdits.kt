@@ -12,23 +12,29 @@ import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 
 private fun MutableMethod.where(): String = "$definingClass->$name"
 
+private fun Any.declaredFieldsDeep(): List<java.lang.reflect.Field> = buildList {
+    var type: Class<*>? = javaClass
+    while (type != null && type != Any::class.java) {
+        addAll(type.declaredFields)
+        type = type.superclass
+    }
+}
+
 private fun MutableMethodImplementation.setRegisterCount(count: Int) {
-    val setter = javaClass.methods.firstOrNull { method ->
-        method.name == "setRegisterCount" && method.parameterCount == 1
-    }
-    if (setter != null) {
-        setter.invoke(this, count)
-        return
-    }
-    val field = javaClass.declaredFields.firstOrNull { it.name == "registerCount" }
-        ?: throw PatchException("This smali library has no register count setter")
+    if (registerCount == count) return
+    val fields = declaredFieldsDeep()
+    val field = fields.firstOrNull { it.name == "registerCount" }
+        ?: fields.singleOrNull { it.type == Int::class.javaPrimitiveType }
+        ?: throw PatchException("This smali library has no register count field")
     field.isAccessible = true
     field.setInt(this, count)
 }
 
 private fun MutableMethodImplementation.clearTryBlocks() {
     if (tryBlocks.isEmpty()) return
-    val field = javaClass.declaredFields.firstOrNull { it.name == "tryBlocks" }
+    val fields = declaredFieldsDeep()
+    val field = fields.firstOrNull { it.name == "tryBlocks" }
+        ?: fields.singleOrNull { List::class.java.isAssignableFrom(it.type) && it.name != "instructionList" }
         ?: throw PatchException("This smali library has no try-block list")
     field.isAccessible = true
     val blocks = field.get(this) as? MutableList<*>
