@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.1...v1.0.2) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+* build a new method when Morphe 2.0 hides the register count ([f55ad2b](https://github.com/ZoomSass/Mighty-Morphing/commit/f55ad2b62f06c5eace7a96126b3c14774508af69))
+
 ## [1.0.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.0...v1.0.1) (2026-10-18)
 
 ### 🐛 Bug Fixes
