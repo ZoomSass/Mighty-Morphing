@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.3...v1.0.4) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+* compile the rebuilt method body on Morphe 2.0 ([958b247](https://github.com/ZoomSass/Mighty-Morphing/commit/958b247db2ffc31153d4ee4f79978cb3298c1b1a))
+* rebuild methods that need more registers on Morphe 2.0 ([2e8f157](https://github.com/ZoomSass/Mighty-Morphing/commit/2e8f157fe3363b51d6fdd4e17c891b313d539ec4))
+
 ## [1.0.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.2...v1.0.3) (2026-10-18)
 
 ### 🐛 Bug Fixes
