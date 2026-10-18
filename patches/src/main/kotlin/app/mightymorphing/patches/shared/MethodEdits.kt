@@ -93,8 +93,6 @@ fun BytecodePatchContext.writeBody(method: MutableMethod, registerCount: Int, sm
         method.addInstructionsWithLabels(0, text)
         return
     }
-    val fresh = MutableMethodImplementation(registerCount)
-    fresh.addInstructionsWithLabels(0, text)
     val replacement = ImmutableMethod(
         method.definingClass,
         method.name,
@@ -103,8 +101,9 @@ fun BytecodePatchContext.writeBody(method: MutableMethod, registerCount: Int, sm
         method.accessFlags,
         method.annotations,
         method.hiddenApiRestrictions,
-        fresh,
+        MutableMethodImplementation(registerCount),
     ).toMutable()
+    replacement.addInstructionsWithLabels(0, text)
     val clazz = mutableClassDefBy(method.definingClass)
     fun MutableSet<MutableMethod>.swap() {
         removeAll { it.sameSignature(method) }
