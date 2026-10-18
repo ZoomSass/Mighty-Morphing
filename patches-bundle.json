@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-15T01:56:29",
-  "description": "## 1.0.0 (2026-10-15)\n\n### ✨ New Features\n\n* add Joey 2.1.6.5 patches ([f433db4](https://github.com/ZoomSass/Mighty-Morphing/commit/f433db427b1a1fad86da150f6e2dcba4b92e5ede))",
-  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.0.0/patches-1.0.0.mpp",
+  "created_at": "2026-10-18T17:24:02",
+  "description": "## [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.0...v1.1.0) (2026-10-18)\n\n### ✨ New Features\n\n* publish the Joey patches from the working builds ([70f6eab](https://github.com/ZoomSass/Mighty-Morphing/commit/70f6eab6e5c9c2bd9d4f4bda898427b99f10129d))",
+  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.1.0/patches-1.1.0.mpp",
   "signature_download_url": "",
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

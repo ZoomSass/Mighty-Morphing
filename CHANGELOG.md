@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.0...v1.1.0) (2026-10-18)
+
+### ✨ New Features
+
+* publish the Joey patches from the working builds ([70f6eab](https://github.com/ZoomSass/Mighty-Morphing/commit/70f6eab6e5c9c2bd9d4f4bda898427b99f10129d))
+
 ## 1.0.0 (2026-10-15)
 
 ### ✨ New Features
