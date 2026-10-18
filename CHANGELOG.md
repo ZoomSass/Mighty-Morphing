@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.0...v1.0.1) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+* patch Joey on Morphe 2.0 ([468dce4](https://github.com/ZoomSass/Mighty-Morphing/commit/468dce483da9236032e6f723e0fba55feb3aee91))
+
 ## 1.0.0 (2026-10-15)
 
 ### ✨ New Features

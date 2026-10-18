@@ -13,7 +13,6 @@ Click the following to add to morphe sources
 https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 
 <!-- PATCHES_START EXPANDED -->
-
 - <span style="color:#d85a45">**Dismiss without tearing:**</span> Swiping a photo away to close it looks smooth instead of tearing.
 - <span style="color:#d85a45">**Fix login page:**</span> Makes Reddit's login page load and work properly inside Joey, and clears the cookie banner out of the way.
 - <span style="color:#d85a45">**Inline comment media:**</span> Shows GIFs, pictures and subreddit emojis right in the comments instead of as links, kept small so threads stay readable. Tap a GIF or picture to open it full size.
