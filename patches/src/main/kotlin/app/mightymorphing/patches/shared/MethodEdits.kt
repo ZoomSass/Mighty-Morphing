@@ -20,14 +20,26 @@ private fun Any.declaredFieldsDeep(): List<java.lang.reflect.Field> = buildList 
     }
 }
 
-private fun MutableMethodImplementation.setRegisterCount(count: Int) {
-    if (registerCount == count) return
+private fun Any.replaceHeld(target: Any, replacement: Any, depth: Int = 0): Boolean {
+    if (depth > 3) return false
     val fields = declaredFieldsDeep()
-    val field = fields.firstOrNull { it.name == "registerCount" }
-        ?: fields.singleOrNull { it.type == Int::class.javaPrimitiveType }
-        ?: throw PatchException("This smali library has no register count field")
-    field.isAccessible = true
-    field.setInt(this, count)
+    for (field in fields) {
+        if (field.type.isPrimitive) continue
+        field.isAccessible = true
+        val value = runCatching { field.get(this) }.getOrNull() ?: continue
+        if (value === target) {
+            field.set(this, replacement)
+            return true
+        }
+    }
+    for (field in fields) {
+        if (field.type.isPrimitive) continue
+        field.isAccessible = true
+        val value = runCatching { field.get(this) }.getOrNull() ?: continue
+        if (value === this || value is String || value is Class<*> || value is Collection<*>) continue
+        if (value.replaceHeld(target, replacement, depth + 1)) return true
+    }
+    return false
 }
 
 private fun MutableMethodImplementation.clearTryBlocks() {
@@ -58,7 +70,12 @@ fun MutableMethod.clearBody() {
 fun MutableMethod.setBody(registerCount: Int, smali: String) {
     val impl = implementation ?: throw PatchException("${where()} has no body")
     clearBody()
-    impl.setRegisterCount(registerCount)
+    if (impl.registerCount != registerCount) {
+        val replacement = MutableMethodImplementation(registerCount)
+        if (!replaceHeld(impl, replacement)) {
+            throw PatchException("${where()} could not take a new register count")
+        }
+    }
     addInstructionsWithLabels(0, smali.trimIndent())
 }
 
