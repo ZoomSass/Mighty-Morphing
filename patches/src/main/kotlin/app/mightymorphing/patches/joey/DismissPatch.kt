@@ -3,6 +3,7 @@ package app.mightymorphing.patches.joey
 import app.mightymorphing.patches.shared.Constants.JOEY
 import app.mightymorphing.patches.shared.insertAt
 import app.mightymorphing.patches.shared.setBody
+import app.mightymorphing.patches.shared.writeBody
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod.Companion.toMutable
@@ -103,6 +104,6 @@ val dismissWithoutTearingPatch = bytecodePatch(
         )
 
         // Static method, .locals 2 plus the activity.
-        ViewerWindowFingerprint.method.setBody(3, VIEWER_WINDOW)
+        writeBody(ViewerWindowFingerprint.method, 3, VIEWER_WINDOW)
     }
 }

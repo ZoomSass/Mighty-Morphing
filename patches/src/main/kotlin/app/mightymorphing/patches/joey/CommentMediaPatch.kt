@@ -2,7 +2,7 @@ package app.mightymorphing.patches.joey
 
 import app.mightymorphing.patches.shared.Constants.JOEY
 import app.mightymorphing.patches.shared.insertAt
-import app.mightymorphing.patches.shared.setBody
+import app.mightymorphing.patches.shared.writeBody
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.smali.ExternalLabel
@@ -44,7 +44,7 @@ val commentMediaPatch = bytecodePatch(
 
     execute {
         // .locals 2 plus this.
-        CommentHtmlFingerprint.method.setBody(3, COMMENT_HTML)
+        writeBody(CommentHtmlFingerprint.method, 3, COMMENT_HTML)
 
         // .locals 5, nothing live yet at the first instruction.
         val touch = CommentLinkTouchFingerprint.method

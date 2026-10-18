@@ -4,7 +4,7 @@ import app.mightymorphing.patches.shared.Constants.JOEY
 import app.mightymorphing.patches.shared.indexOfReference
 import app.mightymorphing.patches.shared.indexOfString
 import app.mightymorphing.patches.shared.insertAt
-import app.mightymorphing.patches.shared.setBody
+import app.mightymorphing.patches.shared.writeBody
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
 import app.morphe.patcher.patch.bytecodePatch
@@ -218,13 +218,13 @@ val redgifsWithSoundPatch = bytecodePatch(
         auth.insertAt(form, TEMPORARY_AUTH)
 
         // .locals 1 plus this and the json parameter.
-        RedgifsTokenFieldFingerprint.method.setBody(3, TOKEN_FIELD)
+        writeBody(RedgifsTokenFieldFingerprint.method, 3, TOKEN_FIELD)
         // .locals 2 plus this and the json parameter.
-        RedgifsExpiryFingerprint.method.setBody(4, EXPIRY)
+        writeBody(RedgifsExpiryFingerprint.method, 4, EXPIRY)
         // .locals 4 plus this and the json parameter.
-        RedgifsUrlFingerprint.method.setBody(6, MEDIA_URL)
+        writeBody(RedgifsUrlFingerprint.method, 6, MEDIA_URL)
         // .locals 2 plus this, the id, and the boolean.
-        RedgifsResolveFingerprint.method.setBody(5, RESOLVE_AGAIN)
+        writeBody(RedgifsResolveFingerprint.method, 5, RESOLVE_AGAIN)
 
         val identifier = RedgifsIdFingerprint.method
         val prefs = identifier.indexOfReference("->f1(")

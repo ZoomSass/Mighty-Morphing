@@ -3,7 +3,7 @@ package app.mightymorphing.patches.joey
 import app.mightymorphing.patches.shared.Constants.JOEY
 import app.mightymorphing.patches.shared.indexOfReference
 import app.mightymorphing.patches.shared.insertAt
-import app.mightymorphing.patches.shared.setBody
+import app.mightymorphing.patches.shared.writeBody
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.patch.stringOption
 
@@ -52,14 +52,16 @@ val clientIdPatch = bytecodePatch(
         val redirect = smaliString(redirectUri!!.trim())
         val agent = smaliString(userAgent!!.trim())
 
-        ClientIdFingerprint.method.setBody(
+        writeBody(
+            ClientIdFingerprint.method,
             1,
             """
             const-string v0, "$id"
             return-object v0
             """,
         )
-        UserAgentFingerprint.method.setBody(
+        writeBody(
+            UserAgentFingerprint.method,
             1,
             """
             const-string v0, "$agent"
@@ -75,7 +77,8 @@ val clientIdPatch = bytecodePatch(
         )
 
         // .locals 2 plus this and the url.
-        LoginCodeCheckFingerprint.method.setBody(
+        writeBody(
+            LoginCodeCheckFingerprint.method,
             4,
             """
             const/4 v0, 0x0
@@ -96,7 +99,8 @@ val clientIdPatch = bytecodePatch(
 
         // The redirect is not a web page, so stop the WebView from trying to open it.
         // .locals 1 plus this, the WebView and the url.
-        LoginOverrideFingerprint.method.setBody(
+        writeBody(
+            LoginOverrideFingerprint.method,
             4,
             """
             iget-object v0, p0, Lo/o/joey/Activities/LoginActivity${'$'}d;->d:Lo/o/joey/Activities/LoginActivity;

@@ -5,7 +5,7 @@ import app.mightymorphing.patches.shared.indexOfReference
 import app.mightymorphing.patches.shared.insertAt
 import app.mightymorphing.patches.shared.returnBoolean
 import app.mightymorphing.patches.shared.returnVoid
-import app.mightymorphing.patches.shared.setBody
+import app.mightymorphing.patches.shared.writeBody
 import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
 import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
 import app.morphe.patcher.patch.bytecodePatch
@@ -38,14 +38,14 @@ val skipAdsAndChecksPatch = bytecodePatch(
     compatibleWith(JOEY)
 
     execute {
-        AdsDisabledFingerprint.method.returnBoolean(true)
-        InlineAdsFingerprint.method.returnBoolean(false)
-        RatePromptFingerprint.method.returnBoolean(false)
-        PurchaseErrorPromptFingerprint.method.returnBoolean(false)
-        PurchasePromptFingerprint.method.returnVoid()
-        UpdateNagFingerprint.method.returnVoid()
-        InstallerCheckFingerprint.method.returnVoid()
-        PlayCheckFingerprint.method.returnVoid()
+        returnBoolean(AdsDisabledFingerprint.method, true)
+        returnBoolean(InlineAdsFingerprint.method, false)
+        returnBoolean(RatePromptFingerprint.method, false)
+        returnBoolean(PurchaseErrorPromptFingerprint.method, false)
+        returnVoid(PurchasePromptFingerprint.method)
+        returnVoid(UpdateNagFingerprint.method)
+        returnVoid(InstallerCheckFingerprint.method)
+        returnVoid(PlayCheckFingerprint.method)
 
         val purchaseDialog = PurchaseDialogFingerprint.method
         purchaseDialog.insertAt(
@@ -58,7 +58,7 @@ val skipAdsAndChecksPatch = bytecodePatch(
         )
 
         // .locals 2 plus this.
-        PreviousCrashFingerprint.method.setBody(3, PREVIOUS_CRASH_BODY)
+        writeBody(PreviousCrashFingerprint.method, 3, PREVIOUS_CRASH_BODY)
 
         val crashlytics = CrashlyticsToggleFingerprint.method
         val enabled = crashlytics.indexOfReference("setCrashlyticsCollectionEnabled")
@@ -69,8 +69,8 @@ val skipAdsAndChecksPatch = bytecodePatch(
         crashlytics.removeInstructions(enabled - 4, 4)
         crashlytics.insertAt(enabled - 4, "const/4 v1, 0x0")
 
-        RecordExceptionFingerprint.method.returnVoid()
-        SendReportsFingerprint.method.returnVoid()
+        returnVoid(RecordExceptionFingerprint.method)
+        returnVoid(SendReportsFingerprint.method)
 
         val handler = UncaughtHandlerFingerprint.method
         handler.removeInstructions(handler.indexOfReference("setDefaultUncaughtExceptionHandler"), 1)

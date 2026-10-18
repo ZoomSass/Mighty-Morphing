@@ -3,12 +3,16 @@ package app.mightymorphing.patches.shared
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
+import app.morphe.patcher.patch.BytecodePatchContext
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod
+import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod.Companion.toMutable
 import app.morphe.patcher.util.smali.ExternalLabel
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.builder.MutableMethodImplementation
 import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
+import com.android.tools.smali.dexlib2.immutable.ImmutableMethod
+import com.android.tools.smali.dexlib2.util.MethodUtil
 
 private fun MutableMethod.where(): String = "$definingClass->$name"
 
@@ -20,45 +24,23 @@ private fun Any.declaredFieldsDeep(): List<java.lang.reflect.Field> = buildList 
     }
 }
 
-private fun MutableMethodImplementation.setRegisterCount(count: Int) {
-    if (registerCount == count) return
-    val current = registerCount
-    val fields = declaredFieldsDeep().filter { field ->
-        field.type == Int::class.javaPrimitiveType &&
-            !java.lang.reflect.Modifier.isStatic(field.modifiers)
-    }
-    val field = fields.firstOrNull { it.name == "registerCount" }
-        ?: fields.firstOrNull { candidate ->
-            candidate.isAccessible = true
-            runCatching { candidate.getInt(this) }.getOrNull() == current &&
-                candidate.declaringClass != javaClass
+/** Older Morphe builds still expose this field by name. 2.0 does not. */
+private fun MutableMethodImplementation.tryRaiseRegisterCount(count: Int): Boolean {
+    if (registerCount >= count) return true
+    val field = declaredFieldsDeep().firstOrNull { candidate ->
+        candidate.name == "registerCount" &&
+            !java.lang.reflect.Modifier.isStatic(candidate.modifiers)
+    } ?: return false
+    return runCatching {
+        field.isAccessible = true
+        runCatching {
+            val modifiers = java.lang.reflect.Field::class.java.getDeclaredField("modifiers")
+            modifiers.isAccessible = true
+            modifiers.setInt(field, field.modifiers and java.lang.reflect.Modifier.FINAL.inv())
         }
-        ?: fields.firstOrNull { candidate ->
-            candidate.isAccessible = true
-            runCatching { candidate.getInt(this) }.getOrNull() == current
-        }
-        ?: throw PatchException("This smali library has no register count field")
-    field.isAccessible = true
-    runCatching {
-        val modifiers = java.lang.reflect.Field::class.java.getDeclaredField("modifiers")
-        modifiers.isAccessible = true
-        modifiers.setInt(field, field.modifiers and java.lang.reflect.Modifier.FINAL.inv())
-    }
-    field.setInt(this, count)
-    if (registerCount == count) return
-    val unsafeClass = Class.forName("sun.misc.Unsafe")
-    val unsafe = unsafeClass.getDeclaredField("theUnsafe").apply { isAccessible = true }.get(null)
-    val offset = unsafeClass.getMethod("objectFieldOffset", java.lang.reflect.Field::class.java)
-        .invoke(unsafe, field) as Long
-    unsafeClass.getMethod(
-        "putInt",
-        Any::class.java,
-        Long::class.javaPrimitiveType,
-        Int::class.javaPrimitiveType,
-    ).invoke(unsafe, this, offset, count)
-    if (registerCount != count) {
-        throw PatchException("Register count stayed $registerCount")
-    }
+        field.setInt(this, count)
+        registerCount == count
+    }.getOrDefault(false)
 }
 
 private fun MutableMethodImplementation.clearTryBlocks() {
@@ -88,23 +70,64 @@ fun MutableMethod.clearBody() {
  */
 fun MutableMethod.setBody(registerCount: Int, smali: String) {
     val impl = implementation ?: throw PatchException("${where()} has no body")
-    clearBody()
-    // A larger existing count still maps p registers to the parameters.
-    if (impl.registerCount < registerCount) {
-        impl.setRegisterCount(registerCount)
+    if (impl.registerCount < registerCount && !impl.tryRaiseRegisterCount(registerCount)) {
+        throw PatchException("${where()} needs $registerCount registers")
     }
+    clearBody()
     addInstructionsWithLabels(0, smali.trimIndent())
 }
 
-fun MutableMethod.returnVoid() {
-    val registers = implementation?.registerCount ?: 1
-    setBody(if (registers == 0) 1 else registers, "return-void")
+private fun MutableMethod.sameSignature(other: MutableMethod): Boolean =
+    name == other.name && parameterTypes.toList() == other.parameterTypes.toList()
+
+/**
+ * Replace a method body on any Morphe release.
+ * Stable releases can raise the register count in place. 2.0 hides that field,
+ * so the method is rebuilt with the public constructor and swapped onto the class.
+ */
+fun BytecodePatchContext.writeBody(method: MutableMethod, registerCount: Int, smali: String) {
+    val text = smali.trimIndent()
+    val impl = method.implementation ?: throw PatchException("${method.definingClass}->${method.name} has no body")
+    if (impl.registerCount >= registerCount || impl.tryRaiseRegisterCount(registerCount)) {
+        method.clearBody()
+        method.addInstructionsWithLabels(0, text)
+        return
+    }
+    val fresh = MutableMethodImplementation(registerCount)
+    fresh.addInstructionsWithLabels(0, text)
+    val replacement = ImmutableMethod(
+        method.definingClass,
+        method.name,
+        method.parameters,
+        method.returnType,
+        method.accessFlags,
+        method.annotations,
+        method.hiddenApiRestrictions,
+        fresh,
+    ).toMutable()
+    val clazz = mutableClassDefBy(method.definingClass)
+    fun MutableSet<MutableMethod>.swap() {
+        removeAll { it.sameSignature(method) }
+        add(replacement)
+    }
+    clazz.methods.swap()
+    if (MethodUtil.isDirect(method)) {
+        clazz.directMethods.swap()
+    } else {
+        clazz.virtualMethods.swap()
+    }
 }
 
-fun MutableMethod.returnBoolean(value: Boolean) {
-    val registers = maxOf(implementation?.registerCount ?: 1, 1)
+fun BytecodePatchContext.returnVoid(method: MutableMethod) {
+    val registers = maxOf(method.implementation?.registerCount ?: 1, 1)
+    writeBody(method, registers, "return-void")
+}
+
+fun BytecodePatchContext.returnBoolean(method: MutableMethod, value: Boolean) {
+    val registers = maxOf(method.implementation?.registerCount ?: 1, 1)
     val bit = if (value) "0x1" else "0x0"
-    setBody(
+    writeBody(
+        method,
         registers,
         """
         const/4 v0, $bit
