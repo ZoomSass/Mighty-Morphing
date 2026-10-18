@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.1",
+  "version": "1.0.0",
   "patches": [
     {
       "name": "Dismiss without tearing",
@@ -82,7 +82,7 @@
     },
     {
       "name": "Log in with your own client ID",
-      "description": "Lets Joey log in with another app's client ID, for when Joey's own login stops working. Sign in to RedReader once, then paste the App ID from Reddit's \"you authorized an app\" email. Leave it empty and nothing changes.",
+      "description": "Lets Joey log in with another app's client ID, for when Joey's own login stops working. Normal option here is to sign in to RedReader once, then paste the App ID from Reddit's \"you authorized an app\" email into this patch's settings in expert mode.",
       "default": true,
       "category": null,
       "compatiblePackages": [

@@ -13,8 +13,7 @@ private fun smaliString(value: String) = value.replace("\\", "\\\\").replace("\"
 val clientIdPatch = bytecodePatch(
     name = "Log in with your own client ID",
     description = "Lets Joey log in with another app's client ID, for when Joey's own login stops working. " +
-        "Sign in to RedReader once, then paste the App ID from Reddit's \"you authorized an app\" email. " +
-        "Leave it empty and nothing changes.",
+        "Normal option here is to sign in to RedReader once, then paste the App ID from Reddit's \"you authorized an app\" email into this patch's settings in expert mode.",
     default = true,
 ) {
     compatibleWith(JOEY)

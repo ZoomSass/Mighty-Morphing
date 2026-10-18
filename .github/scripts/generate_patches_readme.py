@@ -89,38 +89,17 @@ def patches_list(patches):
     lines = []
     for p in sorted(patches, key=lambda x: x["name"]):
         desc = " ".join((p.get("description") or "").split())
-        lines.append(f"- {p['name']}. {desc}".rstrip())
-        for opt in p.get("options") or []:
-            title = opt.get("title") or opt.get("key") or ""
-            detail = " ".join((opt.get("description") or "").split())
-            if detail:
-                lines.append(f"  - {title}: {detail}")
-            elif title:
-                lines.append(f"  - {title}")
+        lines.append(f"- **{p['name']}.** {desc}".rstrip())
     return "\n".join(lines)
 
 
 def build_content(expanded=False):
-    lines = [
-        f"Release [{ver}](https://github.com/{owner}/{repo}/releases/tag/v{ver}) on `{branch}`. {total} patches."
-    ]
-    for pkg, entry in by_pkg.items():
-        patches = list(entry["patches"].values())
-        lines.append("")
-        lines.append(entry["name"])
-        versions = version_line(entry["targets"])
-        if versions:
-            lines.append("")
-            lines.append(versions)
-        lines.append("")
-        lines.append(patches_list(patches))
+    chunks = []
+    for entry in by_pkg.values():
+        chunks.append(patches_list(entry["patches"].values()))
     if universal:
-        lines.append("")
-        lines.append("Other")
-        lines.append("")
-        lines.append(patches_list(universal.values()))
-    lines.append("")
-    return "\n".join(lines)
+        chunks.append(patches_list(universal.values()))
+    return "\n".join(chunks) + "\n"
 
 
 # Build and inject
