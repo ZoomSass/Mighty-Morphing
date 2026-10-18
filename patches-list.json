@@ -1,10 +1,10 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "patches": [
     {
       "name": "Dismiss without tearing",
-      "description": "Swiping a photo away to close it looks smooth instead of tearing, and on Android 11 and newer you can see the feed behind it as it goes.",
+      "description": "Swiping a photo away to close it looks smooth instead of tearing.",
       "default": true,
       "category": null,
       "compatiblePackages": [
@@ -126,7 +126,7 @@
         {
           "key": "user-agent",
           "title": "User agent",
-          "description": "How Joey introduces itself to Reddit. The default matches RedReader.",
+          "description": "Sent with Reddit requests. The default is RedReader's.",
           "required": true,
           "type": "kotlin.String",
           "default": "org.quantumbadger.redreader/1.25.1",
@@ -136,7 +136,7 @@
     },
     {
       "name": "RedGifs with sound",
-      "description": "RedGifs clips play with their sound, in HD when it's available. Joey no longer falls back to the silent version or Reddit's muted preview. 😈",
+      "description": "RedGifs clips play with their sound, in HD when it's available.",
       "default": true,
       "category": null,
       "compatiblePackages": [
@@ -162,7 +162,7 @@
     },
     {
       "name": "Skip ads and checks",
-      "description": "Removes ads everywhere, including between posts, and stops the nags: no prompts to buy, rate the app or update. Also drops the Play Store install check and crash reporting.",
+      "description": "Removes ads everywhere and also drops the Play Store install check and crash reporting.",
       "default": true,
       "category": null,
       "compatiblePackages": [

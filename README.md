@@ -9,8 +9,7 @@ Add the source in Morphe:
 https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 
 <!-- PATCHES_START EXPANDED -->
-
-Release [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/releases/tag/v1.1.0) on `main`. 6 patches.
+Release [1.1.1](https://github.com/ZoomSass/Mighty-Morphing/releases/tag/v1.1.1) on `main`. 6 patches.
 
 Joey
 
@@ -18,8 +17,8 @@ Works with 2.1.6.5.
 
 - Dismiss without tearing. Swiping a photo away to close it looks smooth instead of tearing.
 - Fix login page. Makes Reddit's login page load and work properly inside Joey, and clears the cookie banner out of the way.
-- Inline comment media. Shows GIFs, pictures and subreddit emojis right in the comments instead of as links, kept small so threads stay readable. Tap a GIF or picture to open it full size, or tap anywhere else to collapse the comment like normal.
-- Log in with your own client ID. Lets Joey log in with another app's client ID, for when Joey's own login stops working. Sign in to RedReader once, then paste the App ID from Reddit's "you authorized an app" email into this patch's settings (Expert mode). Leave it empty and nothing changes.
+- Inline comment media. Shows GIFs, pictures and subreddit emojis right in the comments instead of as links, kept small so threads stay readable. Tap a GIF or picture to open it full size.
+- Log in with your own client ID. Lets Joey log in with another app's client ID, for when Joey's own login stops working. Sign in to RedReader once, then paste the App ID from Reddit's "you authorized an app" email. Leave it empty and nothing changes.
   - Client ID: The App ID from Reddit's "you authorized an app" email. Leave empty to keep Joey's own login.
   - Redirect URI: Has to match the app the ID came from. The default works for RedReader.
   - User agent: Sent with Reddit requests. The default is RedReader's.
