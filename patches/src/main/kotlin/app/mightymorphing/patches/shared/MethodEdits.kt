@@ -20,26 +20,45 @@ private fun Any.declaredFieldsDeep(): List<java.lang.reflect.Field> = buildList 
     }
 }
 
-private fun Any.replaceHeld(target: Any, replacement: Any, depth: Int = 0): Boolean {
-    if (depth > 3) return false
-    val fields = declaredFieldsDeep()
-    for (field in fields) {
-        if (field.type.isPrimitive) continue
-        field.isAccessible = true
-        val value = runCatching { field.get(this) }.getOrNull() ?: continue
-        if (value === target) {
-            field.set(this, replacement)
-            return true
+private fun MutableMethodImplementation.setRegisterCount(count: Int) {
+    if (registerCount == count) return
+    val current = registerCount
+    val fields = declaredFieldsDeep().filter { field ->
+        field.type == Int::class.javaPrimitiveType &&
+            !java.lang.reflect.Modifier.isStatic(field.modifiers)
+    }
+    val field = fields.firstOrNull { it.name == "registerCount" }
+        ?: fields.firstOrNull { candidate ->
+            candidate.isAccessible = true
+            runCatching { candidate.getInt(this) }.getOrNull() == current &&
+                candidate.declaringClass != javaClass
         }
+        ?: fields.firstOrNull { candidate ->
+            candidate.isAccessible = true
+            runCatching { candidate.getInt(this) }.getOrNull() == current
+        }
+        ?: throw PatchException("This smali library has no register count field")
+    field.isAccessible = true
+    runCatching {
+        val modifiers = java.lang.reflect.Field::class.java.getDeclaredField("modifiers")
+        modifiers.isAccessible = true
+        modifiers.setInt(field, field.modifiers and java.lang.reflect.Modifier.FINAL.inv())
     }
-    for (field in fields) {
-        if (field.type.isPrimitive) continue
-        field.isAccessible = true
-        val value = runCatching { field.get(this) }.getOrNull() ?: continue
-        if (value === this || value is String || value is Class<*> || value is Collection<*>) continue
-        if (value.replaceHeld(target, replacement, depth + 1)) return true
+    field.setInt(this, count)
+    if (registerCount == count) return
+    val unsafeClass = Class.forName("sun.misc.Unsafe")
+    val unsafe = unsafeClass.getDeclaredField("theUnsafe").apply { isAccessible = true }.get(null)
+    val offset = unsafeClass.getMethod("objectFieldOffset", java.lang.reflect.Field::class.java)
+        .invoke(unsafe, field) as Long
+    unsafeClass.getMethod(
+        "putInt",
+        Any::class.java,
+        Long::class.javaPrimitiveType,
+        Int::class.javaPrimitiveType,
+    ).invoke(unsafe, this, offset, count)
+    if (registerCount != count) {
+        throw PatchException("Register count stayed $registerCount")
     }
-    return false
 }
 
 private fun MutableMethodImplementation.clearTryBlocks() {
@@ -70,11 +89,9 @@ fun MutableMethod.clearBody() {
 fun MutableMethod.setBody(registerCount: Int, smali: String) {
     val impl = implementation ?: throw PatchException("${where()} has no body")
     clearBody()
-    if (impl.registerCount != registerCount) {
-        val replacement = MutableMethodImplementation(registerCount)
-        if (!replaceHeld(impl, replacement)) {
-            throw PatchException("${where()} could not take a new register count")
-        }
+    // A larger existing count still maps p registers to the parameters.
+    if (impl.registerCount < registerCount) {
+        impl.setRegisterCount(registerCount)
     }
     addInstructionsWithLabels(0, smali.trimIndent())
 }
