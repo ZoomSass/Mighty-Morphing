@@ -214,6 +214,20 @@ object CommentHtmlFingerprint : Fingerprint(
     strings = listOf("body_html"),
 )
 
+object CommentSetHtmlFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/CustomViews/HTMLTextView;",
+    name = "setTextHtml",
+    returnType = "V",
+    parameters = listOf("Ljava/lang/String;"),
+)
+
+object PostGifFingerprint : Fingerprint(
+    definingClass = "Lzd/c0;",
+    name = "d",
+    returnType = "Z",
+    parameters = listOf("Landroid/widget/ImageView;", "Ljava/io/File;"),
+)
+
 object CommentSpannableFingerprint : Fingerprint(
     definingClass = "Lo/o/joey/CustomViews/HTMLTextView;",
     name = "setSpannable",
@@ -226,6 +240,27 @@ object CommentLinkTouchFingerprint : Fingerprint(
     name = "onTouchEvent",
     returnType = "Z",
     parameters = listOf("Landroid/widget/TextView;", "Landroid/text/Spannable;", "Landroid/view/MotionEvent;"),
+)
+
+object TutorialSeenFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Tutorial/a;",
+    name = "b",
+    returnType = "Z",
+    parameters = listOf("Ljava/lang/String;"),
+)
+
+object ActivityResultFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/BaseActivity;",
+    name = "onActivityResult",
+    returnType = "V",
+    parameters = listOf("I", "I", "Landroid/content/Intent;"),
+)
+
+object SettingsHookFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/SettingActivities/SettingsActivity;",
+    name = "q3",
+    returnType = "V",
+    parameters = listOf(),
 )
 
 object ClientIdFingerprint : Fingerprint(
@@ -279,6 +314,92 @@ object LoginPageLoadFingerprint : Fingerprint(
     name = "v3",
     returnType = "V",
     parameters = listOf(),
+)
+
+object CommentSearchCreateFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/CommentSearchActivity;",
+    name = "onCreate",
+    returnType = "V",
+    parameters = listOf("Landroid/os/Bundle;"),
+)
+
+object SearchDialogShowFingerprint : Fingerprint(
+    definingClass = "Lq1/f;",
+    name = "onShow",
+    returnType = "V",
+    parameters = listOf("Landroid/content/DialogInterface;"),
+)
+
+object EditorUploadFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/EditorActivity;",
+    name = "A3",
+    returnType = "V",
+    parameters = listOf("Ljava/util/List;", "Z"),
+)
+
+object CommentSubmitFingerprint : Fingerprint(
+    definingClass = "Lnet/dean/jraw/managers/AccountManager;",
+    returnType = "Ljava/lang/String;",
+    parameters = listOf("Lnet/dean/jraw/models/Contribution;", "Ljava/lang/String;"),
+)
+
+object ReplyResultFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/ReplyActivity\$q;",
+    name = "k",
+    returnType = "Ljava/lang/String;",
+    parameters = listOf("[Ljava/lang/Void;"),
+)
+
+object EditSubmitFingerprint : Fingerprint(
+    definingClass = "Lnet/dean/jraw/managers/AccountManager;",
+    returnType = "V",
+    parameters = listOf("Lnet/dean/jraw/models/PublicContribution;", "Ljava/lang/String;"),
+)
+
+object GifPickerFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/EditorActivity\$e;",
+    strings = listOf("video/*", "image/gif"),
+)
+
+object EditorHostAgreementFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/EditorActivity;",
+    name = "d4",
+    returnType = "V",
+    parameters = listOf("Landroid/content/Context;", "Ljava/lang/Runnable;"),
+    strings = listOf("EXTERNAL_MEDIA_HOST_V4"),
+)
+
+object DrawerOpenFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/Activities/HomeActivity\$w0;",
+    name = "a",
+    returnType = "V",
+    parameters = listOf("Landroid/view/View;"),
+    strings = listOf("SWIPE_MARGIN_FOR_DRAWER"),
+)
+
+object DrawerBuildFingerprint : Fingerprint(
+    definingClass = "Lua/b;",
+    name = "B",
+    returnType = "V",
+    parameters = listOf(),
+)
+
+object EditorBarFingerprint : Fingerprint(
+    definingClass = "Lsb/a;",
+    name = "f",
+    returnType = "V",
+    parameters = listOf(
+        "Lo/o/joey/Activities/EditorActivity;",
+        "Ljava/lang/String;",
+        "Ljava/lang/String;",
+    ),
+)
+
+object EditorInputFingerprint : Fingerprint(
+    definingClass = "Landroidx/appcompat/widget/AppCompatEditText;",
+    name = "onCreateInputConnection",
+    returnType = "Landroid/view/inputmethod/InputConnection;",
+    parameters = listOf("Landroid/view/inputmethod/EditorInfo;"),
 )
 
 object LoginPageFinishedFingerprint : Fingerprint(
