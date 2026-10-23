@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.5...v1.1.0) (2026-10-23)
+
+### ✨ New Features
+
+* add comment media, uploads, and Joey settings ([da8edf0](https://github.com/ZoomSass/Mighty-Morphing/commit/da8edf028847aceeb7fffa5438ce37ecaac168e9))
+
 ## [1.0.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.4...v1.0.5) (2026-10-18)
 
 ### 🐛 Bug Fixes
