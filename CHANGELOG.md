@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.1...v1.2.2) (2026-10-29)
+
+### 🐛 Bug Fixes
+
+* Redesign YouTube inline video card with 16:9 previews and titles ([9f76c89](https://github.com/ZoomSass/Mighty-Morphing/commit/9f76c891983f49ff98b5f85013964a8662c178a2))
+
 ## [1.2.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.0...v1.2.1) (2026-10-29)
 
 ### 🐛 Bug Fixes

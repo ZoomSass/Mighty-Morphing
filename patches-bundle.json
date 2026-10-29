@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-10-29T20:22:55",
-  "description": "## [1.2.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.0...v1.2.1) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* Tweak patch descriptions to highlight v1.2 updates ([6bd5407](https://github.com/ZoomSass/Mighty-Morphing/commit/6bd5407c15e1ce5974378ec28493327d50de1f5f))",
-  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.2.1/patches-1.2.1.mpp",
+  "created_at": "2026-10-29T21:00:37",
+  "description": "## [1.2.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.1...v1.2.2) (2026-10-29)\n\n### 🐛 Bug Fixes\n\n* Redesign YouTube inline video card with 16:9 previews and titles ([9f76c89](https://github.com/ZoomSass/Mighty-Morphing/commit/9f76c891983f49ff98b5f85013964a8662c178a2))",
+  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.2.2/patches-1.2.2.mpp",
   "signature_download_url": "",
-  "version": "1.2.1"
+  "version": "1.2.2"
 }

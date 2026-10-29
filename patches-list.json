@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "patches": [
     {
       "name": "Backup and restore",
@@ -134,7 +134,7 @@
     },
     {
       "name": "Inline comment media",
-      "description": "Shows GIFs, pictures, subreddit emojis and reddit videos inline in the comments instead of as links. Tap to open. Extra settings to tweak in Joey - Settings - Morphe Settings.",
+      "description": "[v1.2.2: Redesigned YouTube inline video card with 16:9 previews and titles] Shows GIFs, pictures, subreddit emojis and reddit videos inline in the comments instead of as links. Tap to open. Extra settings to tweak in Joey - Settings - Morphe Settings.",
       "default": true,
       "category": null,
       "compatiblePackages": [
