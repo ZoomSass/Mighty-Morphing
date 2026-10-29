@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.1.0...v1.2.0) (2026-10-29)
+
+### ✨ New Features
+
+* Add Reddit link handling, Subreddit filters, and Toolbar customizations ([f997884](https://github.com/ZoomSass/Mighty-Morphing/commit/f9978845f97f5b3a32f54dda4a7c6ff0ab14d130))
+
 ## [1.1.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.0.5...v1.1.0) (2026-10-23)
 
 ### ✨ New Features

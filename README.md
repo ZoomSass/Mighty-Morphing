@@ -18,8 +18,8 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - <span style="color:#d85a45">**Log in with your own client ID:**</span> Lets Joey log in with another app's client ID, for when Joey's own login stops working. Normal option here is to sign in to RedReader once, then paste the App ID from Reddit's "you authorized an app" email into this patch's settings in expert mode.
 - <span style="color:#d85a45">**Open Reddit share links:**</span> Opens modern Reddit share links directly to the right post or comment in Joey instead of loading the web page. To open Reddit links from other apps, make sure all links are ticked in Android Settings -> Apps -> Joey -> Open by default.
 - <span style="color:#d85a45">**RedGifs with sound:**</span> RedGifs clips play with their sound, in HD when it's available.
-- <span style="color:#d85a45">**Search auto open keyboard:**</span> Opens the keyboard automatically for homepage search and comment search. Also triggers search directly when tapping Enter on the keyboard.
-- <span style="color:#d85a45">**Show/Hide:**</span> Choose which comment editor buttons, sidebar entries, and subreddit toolbar items are shown. Adjust viewable options and order in Joey - Settings - Morphe Settings.
+- <span style="color:#d85a45">**Search auto open keyboard:**</span> Opens the keyboard automatically for homepage search and comment search.
+- <span style="color:#d85a45">**Show/Hide:**</span> Choose which comment editor buttons, sidebar entries, and subreddit toolbar items are shown. Adjust viewable options in Joey - Settings - Morphe Settings.
 - <span style="color:#d85a45">**Skip ads and checks:**</span> Removes ads everywhere and also drops the Play Store install check and crash reporting.
 - <span style="color:#d85a45">**Subreddit filter options:**</span> Adds a subreddit suffix filter and lets you toggle subreddit filters on or off without deleting them. Configure in Joey - Settings - Filters, or from the feed Filter out posts menu.
 
