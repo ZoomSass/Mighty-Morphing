@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.2...v1.3.0) (2026-11-09)
+
+### ✨ New Features
+
+* Add Modern UI, Splash Screen, and updates to comments, show and hide, and backup ([ba410e3](https://github.com/ZoomSass/Mighty-Morphing/commit/ba410e304a98e72c5e33339da44ed514e73da5ce))
+
 ## [1.2.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.1...v1.2.2) (2026-10-29)
 
 ### 🐛 Bug Fixes
