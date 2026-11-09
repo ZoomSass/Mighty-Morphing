@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.2...v1.3.3) (2026-11-09)
+
+### 🐛 Bug Fixes
+
+* Media viewer fixes ([5ffece0](https://github.com/ZoomSass/Mighty-Morphing/commit/5ffece0a339170e9ac26c69b8254486187846f3c))
+
 ## [1.3.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.1...v1.3.2) (2026-11-09)
 
 ### 🐛 Bug Fixes
