@@ -103,6 +103,7 @@ public final class ModernUi {
     private static final WeakHashMap<ImageView, Float> WASH_BLUR = new WeakHashMap<>();
     private static final float BORDER_BLUR = 36f;
     private static final WeakHashMap<View, Boolean> HEADER_LIFTED = new WeakHashMap<>();
+    private static final WeakHashMap<View, Boolean> TITLE_GUARD = new WeakHashMap<>();
     private static final WeakHashMap<View, Integer> COLLAPSE_PAD = new WeakHashMap<>();
     private static final int SCROLL_WITH_BANNER = 1 | 4 | 8;
 
@@ -1698,8 +1699,10 @@ public final class ModernUi {
         if (applied != null && applied == signature) {
             View collapsing = container.getParent() instanceof View ? (View) container.getParent() : null;
             Activity activity = activityOf(context);
-            if (collapsing != null && homeFeed(activity)) parkToolbar(collapsing, container);
-            else if (collapsing != null) raiseBack(collapsing, container);
+            if (collapsing != null && homeFeed(activity)) {
+                parkToolbar(collapsing, container);
+                if (!hidden) hideCollapsedTitle(collapsing);
+            } else if (collapsing != null) raiseBack(collapsing, container);
             if (activity != null) seatRail(activity);
             // Joey paints the picture's own colour back over the blur on a later frame.
             if (container instanceof ViewGroup) placeWash((ViewGroup) container, banner, hidden);
@@ -1723,11 +1726,12 @@ public final class ModernUi {
             if (home) {
                 seatToolbar(collapsing, false);
                 parkToolbar(collapsing, container);
+                if (!hidden) hideCollapsedTitle(collapsing);
             } else {
                 raiseBack(collapsing, container);
             }
         }
-        paintToolbarTitle(container, false);
+        if (collapsing != null && (hidden || !home)) paintToolbarTitle(collapsing, false);
         placeTabMenu(container, home && (activity == null || !showRail(activity)));
         if (activity != null) {
             clearTabIndicator(activity);
@@ -2657,6 +2661,7 @@ public final class ModernUi {
         View tagged = appbar.findViewWithTag(TAB_MENU_TAG);
         if (tagged instanceof ViewGroup) {
             tintTabMenu(tagged, activity);
+            pinSubredditBar(tagged);
             return;
         }
         if (tagged instanceof ImageView && tagged.getParent() instanceof ViewGroup) {
@@ -2671,6 +2676,12 @@ public final class ModernUi {
         ViewGroup.LayoutParams kept = appBarParams(tabParams);
         if (rowParams == tabParams || kept == tabParams) return;
         shareWidth(kept);
+        // A fresh AppBar row defaults to scrolling. Joey's name strip stays put, so a
+        // long scroll still leaves it on screen for a left or right swipe.
+        try {
+            rowParams.getClass().getMethod("setScrollFlags", int.class).invoke(rowParams, 0);
+        } catch (Throwable ignored) {
+        }
         parent.removeView(tabs);
 
         float density = activity.getResources().getDisplayMetrics().density;
@@ -2852,10 +2863,38 @@ public final class ModernUi {
         return null;
     }
 
+    /** Joey reveals the big subreddit name once the banner has collapsed. Leave that name hidden. */
+    private static void hideCollapsedTitle(View collapsing) {
+        paintToolbarTitle(collapsing, false);
+        try {
+            collapsing.getClass().getMethod("setTitleEnabled", boolean.class).invoke(collapsing, false);
+        } catch (Throwable ignored) {
+        }
+        if (!(collapsing.getParent() instanceof View) || TITLE_GUARD.containsKey(collapsing)) return;
+        View appbar = (View) collapsing.getParent();
+        try {
+            ClassLoader loader = appbar.getClass().getClassLoader();
+            Class<?> type = Class.forName(
+                    "com.google.android.material.appbar.AppBarLayout$OnOffsetChangedListener", false, loader);
+            Object listener = java.lang.reflect.Proxy.newProxyInstance(
+                    loader,
+                    new Class<?>[] { type },
+                    (proxy, method, args) -> {
+                        String name = method.getName();
+                        if ("onOffsetChanged".equals(name)) paintToolbarTitle(collapsing, false);
+                        else if ("hashCode".equals(name)) return System.identityHashCode(proxy);
+                        else if ("equals".equals(name)) return proxy == (args == null ? null : args[0]);
+                        else if ("toString".equals(name)) return "MorpheTitleGuard";
+                        return null;
+                    });
+            appbar.getClass().getMethod("addOnOffsetChangedListener", type).invoke(appbar, listener);
+            TITLE_GUARD.put(collapsing, Boolean.TRUE);
+        } catch (Throwable ignored) {
+        }
+    }
+
     /** Hidden banner uses Joey's collapsed toolbar: small title, no big name or picture. */
-    private static void paintToolbarTitle(View container, boolean show) {
-        View collapsing = container.getParent() instanceof View ? (View) container.getParent() : null;
-        if (collapsing == null) return;
+    private static void paintToolbarTitle(View collapsing, boolean show) {
         View toolbar = findChild(collapsing, "toolbar");
         if (toolbar == null) return;
         int color = show ? getPalette(toolbar.getContext()).onSurface : 0;
@@ -2984,6 +3023,11 @@ public final class ModernUi {
         if (view instanceof ViewGroup && !((ViewGroup) view).getClipChildren()) {
             ((ViewGroup) view).setClipChildren(true);
         }
+    }
+
+    /** The subreddit names stay on screen. The banner above them still scrolls away. */
+    private static void pinSubredditBar(View bar) {
+        setScrollFlags(bar, 0);
     }
 
     private static void setScrollFlags(View collapsing, int flags) {
