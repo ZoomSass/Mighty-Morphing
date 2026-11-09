@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.0...v1.3.1) (2026-11-09)
+
+### 🐛 Bug Fixes
+
+* Add a slight theme-coloured line between posts ([4e2944e](https://github.com/ZoomSass/Mighty-Morphing/commit/4e2944e2cc3e4d7af0e6aaef9cdb1f6b6a4ad1ad))
+
 ## [1.3.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.2.2...v1.3.0) (2026-11-09)
 
 ### ✨ New Features
