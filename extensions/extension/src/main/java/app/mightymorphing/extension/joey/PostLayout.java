@@ -61,10 +61,8 @@ public final class PostLayout {
             {"percent", "Upvote percentage"},
     };
 
-    /** Votes, save, and download stay left of the gap. Everything else stays where Joey put it. */
+    /** The star and download stay left of the gap. Votes stay on the right, beside the score. */
     private static final String[][] ACTIONS = {
-            {"upvote", "Upvote"},
-            {"downvote", "Downvote"},
             {"save", "Save"},
             {"download", "Download"},
             {"share_icon", "Share"},
@@ -209,7 +207,7 @@ public final class PostLayout {
     public static void showActions(Activity activity) {
         showPlaces(activity, "Post bar",
                 "Drag the handle to change the order. Hide takes an item off the bar. "
-                        + "Download stays on the left, with the votes and the star.",
+                        + "Download stays on the left, with the star. The votes stay on the right, beside the score.",
                 ACTIONS, false, false, KEY_ACTION_ORDER, KEY_ACTION_PLACE, PostLayout::drawActions);
     }
 
@@ -219,10 +217,10 @@ public final class PostLayout {
     }
 
     private static boolean leftIcon(String id) {
-        return "upvote".equals(id) || "downvote".equals(id) || "save".equals(id) || "download".equals(id);
+        return "save".equals(id) || "download".equals(id);
     }
 
-    /** Votes, the star, and download stay left of the gap, in the saved order. */
+    /** The star and download stay left of the gap, in the saved order. */
     private static void sides(List<String> order, JSONObject place, List<String> left, List<String> right) {
         for (String id : order) {
             if ("more".equals(id)) continue;
@@ -247,12 +245,27 @@ public final class PostLayout {
         List<String> merged = new ArrayList<>();
         merged.addAll(left);
         merged.addAll(right);
+        flankScore(merged);
         return merged;
     }
 
+    /** Upvote sits just before the score, and downvote just after it. */
+    private static void flankScore(List<String> order) {
+        order.remove("upvote");
+        order.remove("downvote");
+        int score = order.indexOf("score");
+        if (score < 0) {
+            order.add("upvote");
+            order.add("downvote");
+            return;
+        }
+        order.add(score, "upvote");
+        order.add(order.indexOf("score") + 1, "downvote");
+    }
+
     /**
-     * Moves only upvote, downvote, save, and download. They sit, in the saved order,
-     * immediately before the gap. Share, link, and the menu stay where they are.
+     * Moves save and download, in the saved order, to just before the gap.
+     * Upvote and downvote go back beside the score, on the right.
      */
     private static void seatLeft(View item) {
         View barView = find(item, "actionbar_layout");
@@ -280,13 +293,38 @@ public final class PostLayout {
             }
             at++;
         }
-        if (seated) return;
-        for (View view : left) bar.removeView(view);
-        at = Math.max(0, bar.indexOfChild(gap));
-        for (View view : left) {
-            bar.addView(view, Math.min(at, bar.getChildCount()));
-            at++;
+        if (!seated) {
+            for (View view : left) bar.removeView(view);
+            at = Math.max(0, bar.indexOfChild(gap));
+            for (View view : left) {
+                bar.addView(view, Math.min(at, bar.getChildCount()));
+                at++;
+            }
         }
+        seatVotes(item, bar, chosen, place);
+    }
+
+    /** Upvote, the score, and downvote sit together on the right, as Joey lays them out. */
+    private static void seatVotes(View item, ViewGroup bar, boolean chosen, JSONObject place) {
+        View score = find(item, "score");
+        View up = find(item, "upvote");
+        View down = find(item, "downvote");
+        showVote(up, "upvote", chosen, place);
+        showVote(down, "downvote", chosen, place);
+        if (score == null || score.getParent() != bar) return;
+        if (up != null && up.getParent() == bar && up.getVisibility() != View.GONE) {
+            bar.removeView(up);
+            bar.addView(up, bar.indexOfChild(score));
+        }
+        if (down != null && down.getParent() == bar && down.getVisibility() != View.GONE) {
+            bar.removeView(down);
+            bar.addView(down, Math.min(bar.indexOfChild(score) + 1, bar.getChildCount()));
+        }
+    }
+
+    private static void showVote(View view, String id, boolean chosen, JSONObject place) {
+        if (view == null || !chosen) return;
+        view.setVisibility(modeOf(place, id) == HIDDEN ? View.GONE : View.VISIBLE);
     }
 
     private static View spacer(ViewGroup bar) {
