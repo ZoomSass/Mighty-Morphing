@@ -392,25 +392,38 @@ public final class PostLayout {
                 }
             }
         }
-        clearRule(item);
+        drawRule(item, palette.outline);
         plate(item, palette.containerHigh);
     }
 
-    /** Joey's row divider, and the line this screen used to add under each post. */
-    private static void clearRule(View item) {
+    /** A one-pixel line in the theme outline, under each post. */
+    private static void drawRule(View item, int color) {
         View frame = find(item, "revealFrameLayout");
         if (!(frame instanceof ViewGroup)) frame = item;
         if (!(frame instanceof ViewGroup)) return;
         ViewGroup group = (ViewGroup) frame;
+        View rule = null;
         for (int i = 0; i < group.getChildCount(); i++) {
             View child = group.getChildAt(i);
             String type = child.getClass().getName();
-            if (!"morphe_post_rule".equals(child.getTag()) && !type.endsWith("CView")) continue;
-            child.setVisibility(View.GONE);
-            ViewGroup.LayoutParams lp = child.getLayoutParams();
-            if (lp == null) continue;
-            lp.height = 0;
-            child.setLayoutParams(lp);
+            if ("morphe_post_rule".equals(child.getTag()) || type.endsWith("CView")) {
+                rule = child;
+                break;
+            }
+        }
+        if (rule == null) {
+            rule = new View(item.getContext());
+            rule.setTag("morphe_post_rule");
+            group.addView(rule, new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, 1, Gravity.BOTTOM));
+        }
+        rule.setVisibility(View.VISIBLE);
+        rule.setAlpha(1f);
+        rule.setBackgroundColor(color);
+        ViewGroup.LayoutParams lp = rule.getLayoutParams();
+        if (lp != null && lp.height != 1) {
+            lp.height = 1;
+            rule.setLayoutParams(lp);
         }
     }
 
