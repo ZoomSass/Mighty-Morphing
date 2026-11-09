@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.1...v1.3.2) (2026-11-09)
+
+### 🐛 Bug Fixes
+
+* Move the vote buttons back beside the score ([d24fef6](https://github.com/ZoomSass/Mighty-Morphing/commit/d24fef612867ba572709216656f12e68e86be960))
+
 ## [1.3.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.0...v1.3.1) (2026-11-09)
 
 ### 🐛 Bug Fixes
