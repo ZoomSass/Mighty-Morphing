@@ -1,3 +1,9 @@
+## [1.3.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.4...v1.3.5) (2026-11-09)
+
+### 🐛 Bug Fixes
+
+* Splash animation can be disabled ([5ef60c2](https://github.com/ZoomSass/Mighty-Morphing/commit/5ef60c25472a55cc740d1cfd870a8066b9fb86b7))
+
 ## [1.3.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.3...v1.3.4) (2026-11-09)
 
 ### 🐛 Bug Fixes
