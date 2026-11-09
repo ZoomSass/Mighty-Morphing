@@ -22,7 +22,7 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - <span style="color:#d85a45">**Search auto open keyboard:**</span> Opens the keyboard automatically for homepage search and comment search. The Enter and Search keys start the search.
 - <span style="color:#d85a45">**Show/Hide:**</span> [v1.3: Drag the handle to reorder] Choose which comment editor buttons, sidebar entries, subreddit toolbar items, and post actions are shown. What does not fit on a post goes in its menu. Adjust viewable options in Joey Settings - Morphe Settings.
 - <span style="color:#d85a45">**Skip ads and checks:**</span> Removes ads everywhere and also drops the Play Store install check and crash reporting.
-- <span style="color:#d85a45">**Splash Screen:**</span> Logo inspired by u/otheast. Animation and colours are fully customisable in Joey Settings - Morphe Settings.
+- <span style="color:#d85a45">**Splash Screen:**</span> [v1.3.5: Animation can be turned off] Logo inspired by u/otheast. Animation and colours are fully customisable in Joey Settings - Morphe Settings.
 - <span style="color:#d85a45">**Subreddit filter options:**</span> Adds a subreddit suffix filter and lets you toggle subreddit filters on or off without deleting them. Configure in Joey - Settings - Filters, or from the feed Filter out posts menu.
 
 <!-- PATCHES_END -->
