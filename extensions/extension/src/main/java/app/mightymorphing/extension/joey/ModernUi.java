@@ -1171,8 +1171,7 @@ public final class ModernUi {
         for (String name : new String[]{
                 "setting_item_theme",
                 "settings_theme_title",
-                "setting_item_font",
-                "setting_item_post_style"}) {
+                "setting_item_font"}) {
             int id = context.getResources().getIdentifier(name, "string", context.getPackageName());
             if (id != 0) hidden.add(context.getString(id));
         }
