@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -1351,8 +1352,14 @@ public final class PostLayout {
         return found == 0 ? null : item.findViewById(found);
     }
 
+    private static final Map<String, Integer> IDS = new HashMap<>();
+
     private static int id(View view, String name) {
-        return view.getResources().getIdentifier(name, "id", view.getContext().getPackageName());
+        Integer cached = IDS.get(name);
+        if (cached != null) return cached;
+        int found = view.getResources().getIdentifier(name, "id", view.getContext().getPackageName());
+        IDS.put(name, found);
+        return found;
     }
 
     private static View findCard(View item) {
@@ -1381,12 +1388,20 @@ public final class PostLayout {
         }
     }
 
+    private static final Map<String, Method> METHODS = new HashMap<>();
+
     private static void invoke(Object target, String name, Object arg) {
         try {
             Class<?> type = arg instanceof Float ? float.class
                     : arg instanceof Boolean ? boolean.class
                     : arg instanceof Integer ? int.class : arg.getClass();
-            target.getClass().getMethod(name, type).invoke(target, arg);
+            String key = target.getClass().getName() + "#" + name + "#" + type.getName();
+            Method method = METHODS.get(key);
+            if (method == null) {
+                method = target.getClass().getMethod(name, type);
+                METHODS.put(key, method);
+            }
+            method.invoke(target, arg);
         } catch (Throwable ignored) {
         }
     }
