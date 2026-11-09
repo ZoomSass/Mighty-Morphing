@@ -1,3 +1,9 @@
+## [1.3.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.3...v1.3.4) (2026-11-09)
+
+### 🐛 Bug Fixes
+
+* Fix the subreddit header scrolling away ([4e4b79b](https://github.com/ZoomSass/Mighty-Morphing/commit/4e4b79b8f24d78542e73ae5ce8facc5f733b8dac))
+
 ## [1.3.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.2...v1.3.3) (2026-11-09)
 
 ### 🐛 Bug Fixes
