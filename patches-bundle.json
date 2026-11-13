@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-09T23:33:29",
-  "description": "## [1.3.6](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.5...v1.3.6) (2026-11-09)\n\n### 🐛 Bug Fixes\n\n* Classic Joey can be turned back on. The Joey bird image in sidebar can be toggled on when using ModernUI. Performance improvements for Modern UI. ([3fe17bc](https://github.com/ZoomSass/Mighty-Morphing/commit/3fe17bcd2c96ffb1a432dde79cd808834ae4df21))\n* Post style settings are back, without post layout, thumbnail side, or corner roundness. Thumbnail post style ui fixes. ([ef85301](https://github.com/ZoomSass/Mighty-Morphing/commit/ef85301121a278d48373cc8d94705a4962589b9a))",
-  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.3.6/patches-1.3.6.mpp",
+  "created_at": "2026-11-13T00:34:05",
+  "description": "## [1.3.7](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.6...v1.3.7) (2026-11-13)\n\n### 🐛 Bug Fixes\n\n* AMOLED black now appears in settings. ([2fa67cb](https://github.com/ZoomSass/Mighty-Morphing/commit/2fa67cbce1015cbd87068e72f53f0d7b7d397d24))\n* Loads replies that stay hidden when Reddit will not open them. Based on the Patcheddit fix. ([7a96b8d](https://github.com/ZoomSass/Mighty-Morphing/commit/7a96b8df2430fe5fe0f6b1f3b249464cf6aebf16))",
+  "download_url": "https://github.com/ZoomSass/Mighty-Morphing/releases/download/v1.3.7/patches-1.3.7.mpp",
   "signature_download_url": "",
-  "version": "1.3.6"
+  "version": "1.3.7"
 }
