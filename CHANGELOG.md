@@ -1,3 +1,9 @@
+## [1.3.8](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.7...v1.3.8) (2026-11-13)
+
+### 🐛 Bug Fixes
+
+* Modern UI note now says v1.3.7. ([14708cb](https://github.com/ZoomSass/Mighty-Morphing/commit/14708cb3a7f6e055b43fc59eeb3a666dc2a0fec6))
+
 ## [1.3.7](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.6...v1.3.7) (2026-11-13)
 
 ### 🐛 Bug Fixes
