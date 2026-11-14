@@ -35,9 +35,7 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - **Account stats:** Reactivate account age and karma indicators on posts and comments.
 - **Pinned sidebar:** A sidebar that can stay open beside the feed.
 - **Post details overflow menu:** Choose which post details stay on the line and which go in an overflow menu.
-- **Post bar overflow menu:** Choose which post bar items stay on the row and which go in the menu.
 - **Feed UI tweaks:** Further adjustments to the feed layout.
-- **Media viewer UI tweaks:** Further adjustments to the media viewer.
 - **Modern UI:** Further theme enhancements. Full post style settings integration.
 - **Show and hide previews:** Live previews for the show and hide options that do not have one yet.
 - **Arctic Shift undelete:** Look up removed posts and comments through https://arctic-shift.photon-reddit.com.
