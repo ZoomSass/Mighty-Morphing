@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.0...v1.4.1) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* Opened post image style can be changed in Morphe Settings - Appearance - Image style to match Joey stock options. ([8aae485](https://github.com/ZoomSass/Mighty-Morphing/commit/8aae4855992ac774d72021d1df60cdaee95cbfc2))
+
 ## [1.4.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.3.8...v1.4.0) (2026-11-14)
 
 ### ✨ New Features
