@@ -1,3 +1,9 @@
+## [1.4.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.3...v1.4.4) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* Image style refinements. ([68adb55](https://github.com/ZoomSass/Mighty-Morphing/commit/68adb555a198cd84fddd75e379add3ac8766d1e9))
+
 ## [1.4.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.2...v1.4.3) (2026-11-15)
 
 ### 🐛 Bug Fixes
