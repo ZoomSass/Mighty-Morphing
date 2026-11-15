@@ -40,7 +40,7 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - **Feed UI tweaks:** Further adjustments to the feed layout.
 - **Modern UI:** Further theme enhancements.
 - **Show and hide previews:** Live previews for the remaining Show/Hide options.
-- **Classic support for Modern-only extras:** Downloads, image style, player buttons, hide controls on tap and swipe albums closed in Classic Joey.
+- **Classic image style:** The Modern image style options in Classic Joey.
 - **More link previews:** Show more than 4 link previews.
 - **Image host choice:** Upload images to a different host, for subreddits that block Reddit-hosted images.
 

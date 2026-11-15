@@ -225,6 +225,21 @@ public final class PostLayout {
         run(card);
     }
 
+    /**
+     * Shared media hooks, end of the post bind. Classic gets the download button on Joey's own
+     * bar; Modern places it through run() and Post buttons & menu.
+     */
+    public static void classicPost(Object card) {
+        try {
+            if (card == null) return;
+            View item = itemOf(card);
+            if (item == null || ModernUi.modernLook(item.getContext())) return;
+            MediaDownload.attachClassic(item, field(card, "b"));
+        } catch (Throwable t) {
+            Log.e(TAG, "classicPost", t);
+        }
+    }
+
     private static void run(Object card) {
         try {
             View item = itemOf(card);

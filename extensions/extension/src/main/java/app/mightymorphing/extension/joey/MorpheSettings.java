@@ -48,6 +48,7 @@ public final class MorpheSettings {
     private static boolean showHideControls;
     private static boolean modernUiControls;
     private static boolean undeleteControls;
+    private static boolean mediaEnhancementControls;
 
     private MorpheSettings() {
     }
@@ -58,6 +59,15 @@ public final class MorpheSettings {
 
     public static void enableBackup() {
         backupControls = true;
+    }
+
+    /** Shared media hooks are patched (Modern UI or Media enhancements). */
+    public static void enableMediaEnhancements() {
+        mediaEnhancementControls = true;
+    }
+
+    public static boolean mediaEnhancementControls() {
+        return mediaEnhancementControls;
     }
 
     public static void enableUndelete() {
