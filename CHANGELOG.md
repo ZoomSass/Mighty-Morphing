@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.5...v1.5.0) (2026-11-15)
+
+### ✨ New Features
+
+* Media enhancements patch for Classic Joey ([92da974](https://github.com/ZoomSass/Mighty-Morphing/commit/92da974c2407d24677c3495f8611f1671d724a76))
+
 ## [1.4.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.4...v1.4.5) (2026-11-15)
 
 ### 🐛 Bug Fixes
