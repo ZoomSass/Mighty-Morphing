@@ -45,7 +45,7 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - **Image host choice:** Upload images to a different host, for subreddits that block Reddit-hosted images.
 
 ## Credits
-- **Morphe:** The patcher these patches are built for. The project began from the ReVanced patches template, later moved to the Morphe patches template.
+- **Morphe:** The patcher these patches are built for.
 - **Patcheddit:** The collapsed replies fix and the login page fix are based on its patches.
 - **Infinity for Reddit:** Inline comment media reads Reddit's gallery and emoji data the same way it does.
 - **Arctic Shift** by Arthur Heitmann: Added restore functionality using Arctic Shift. https://github.com/ArthurHeitmann/arctic_shift
