@@ -72,6 +72,7 @@ public final class PostLayout {
             {"share_icon", "Share"},
             {"link_icon", "Link"},
             {"preview_icon", "Text preview"},
+            {"reply", "Reply"},
             {"hide_icon", "Hide"},
             {"commentsTextView", "Comments"},
             {"upvote", "Upvote"},
@@ -404,7 +405,7 @@ public final class PostLayout {
     }
 
     public static void showDetails(Activity activity) {
-        showPlaces(activity, "Post details",
+        showPlaces(activity, "Post info line",
                 "Drag the handle to change the order. Hide takes a detail off the line.",
                 DETAILS, false, false, KEY_DETAIL_ORDER, KEY_DETAIL_PLACE, PostLayout::drawDetails);
     }
@@ -441,6 +442,10 @@ public final class PostLayout {
             int save = left.indexOf("save");
             left.add(save < 0 ? left.size() : save + 1, "download");
         }
+        // Reply came back after some orders were saved. It starts where Joey has it, first on the
+        // right, rather than at the end where a new item would otherwise go.
+        String saved = prefs(context).getString(KEY_ACTION_ORDER, null);
+        if (saved != null && !saved.contains("\"reply\"") && right.remove("reply")) right.add(0, "reply");
         List<String> merged = new ArrayList<>();
         merged.addAll(left);
         merged.addAll(right);
@@ -1567,7 +1572,7 @@ public final class PostLayout {
         float density = activity.getResources().getDisplayMetrics().density;
         int text = MorpheDialog.text(activity);
         List<List<String>> lists = actionLists(activity);
-        LinearLayout page = MorpheDialog.page(activity, "Post actions",
+        LinearLayout page = MorpheDialog.page(activity, "Post buttons & menu",
                 "Choose what shows on the post bar and in its \u22ee menu.");
         SharedPreferences prefs = prefs(activity);
         int[] columns = new int[]{prefs.getInt(KEY_MENU_COLUMNS, 0)};
@@ -2669,6 +2674,7 @@ public final class PostLayout {
         if ("share_icon".equals(id)) return "share";
         if ("link_icon".equals(id)) return "link";
         if ("preview_icon".equals(id)) return "text_content_type";
+        if ("reply".equals(id)) return "reply_outline";
         if ("hide_icon".equals(id)) return "eye_off_outline";
         if ("upvote".equals(id)) return "upvote_arrow_outline";
         if ("downvote".equals(id)) return "downvote_arrow_outline";

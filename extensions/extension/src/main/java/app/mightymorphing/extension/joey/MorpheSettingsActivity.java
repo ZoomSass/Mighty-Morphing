@@ -219,7 +219,7 @@ public final class MorpheSettingsActivity extends Activity {
                 showHide.addView(chipOrder);
                 showHide.addView(detailOrder);
             }
-            View postBar = actionRow(activity, "Post actions", "What is on the post bar, what is in its \u22ee menu, and how the menu opens.",
+            View postBar = actionRow(activity, "Post buttons & menu", "The buttons under each post, what goes in its \u22ee menu, and how the menu opens.",
                     () -> PostLayout.showActions(activity));
             if (MorpheSettings.modernUiControls()) greyRow(postBar, ModernUi.isModernUiEnabled(activity));
             showHide.addView(postBar);
@@ -692,8 +692,8 @@ public final class MorpheSettingsActivity extends Activity {
     }
 
     private View postDetailsRow(Activity activity) {
-        return actionRow(activity, "Post details",
-                "What shows under the title, and the order. Joey's own line until you change it.",
+        return actionRow(activity, "Post info line",
+                "The line under the title: subreddit, points, author, time and more, and their order.",
                 () -> PostLayout.showDetails(activity));
     }
 
