@@ -216,6 +216,7 @@ public final class PostLayout {
             View item = itemOf(card);
             if (item == null || !ModernUi.isModernUiEnabled(item.getContext())) return;
             styleChrome(item);
+            markStyle(item, card);
             placeThumbnail(item);
             PostMotion.wireTaps(item);
             MediaDownload.attach(item, field(card, "b"));
@@ -242,7 +243,7 @@ public final class PostLayout {
         hideParent(activity, "hide_as_action_switch", 1);
         hideParent(activity, "share_as_action_switch", 1);
         hideParent(activity, "author_flair_switch", 1);
-        // Modern always gives the post on the comments screen the feed's layout.
+        // Image style offers this in Modern, so Joey's own row stays hidden.
         hideParent(activity, "comment_screen_post_layout_same_as_above", 3);
     }
 
@@ -334,6 +335,22 @@ public final class PostLayout {
             cards.addView(card, lp);
         }
         page.addView(cards);
+        // Joey's own choice, kept as the user left it. Off: the opened post shows a full image.
+        CheckBox same = MorpheDialog.check(activity, "Use this style when a post is opened",
+                joeySubmission(activity).getBoolean(KEY_SAME_STYLE, false), null);
+        same.setOnCheckedChangeListener((button, checked) -> {
+            joeySubmission(activity).edit().putBoolean(KEY_SAME_STYLE, checked).apply();
+            changed(activity);
+        });
+        LinearLayout.LayoutParams sameLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sameLp.topMargin = Math.round(12 * density);
+        page.addView(same, sameLp);
+        TextView sameNote = new TextView(activity);
+        sameNote.setText("Off shows the full picture at the top of the comments screen.");
+        sameNote.setTextColor(sub);
+        sameNote.setTextSize(13);
+        page.addView(sameNote);
         TextView cancel = MorpheDialog.action(activity, "Cancel", MorpheDialog.SUB);
         cancel.setOnClickListener(v -> {
             if (shown[0] != null) shown[0].dismiss();
@@ -693,7 +710,7 @@ public final class PostLayout {
         View thumb = find(item, "thumbnail");
         View title = find(item, "titleTextView");
         View bar = find(item, "actionbar_layout");
-        if (!"THUMBNAIL".equals(imageName()) || thumb == null || title == null
+        if (thumb == null || !"THUMBNAIL".equals(styleOf(thumb)) || title == null
                 || thumb.getVisibility() == View.GONE) {
             // A recycled row that had a thumbnail keeps the moved constraints. Put Joey's back.
             unseat(item, bar);
@@ -902,7 +919,7 @@ public final class PostLayout {
         View body = thumb.getParent() instanceof View
                 ? find((View) thumb.getParent(), "htmlDisplay_submission_card") : null;
         boolean written = body != null && body.getVisibility() == View.VISIBLE;
-        if (!written && thumb.getVisibility() != View.GONE && "THUMBNAIL".equals(imageName())) {
+        if (!written && thumb.getVisibility() != View.GONE && "THUMBNAIL".equals(styleOf(thumb))) {
             need = Math.max(0, thumb.getBottom() + gap - (bar.getTop() - extra));
         }
         if (need == extra) return;
@@ -938,8 +955,8 @@ public final class PostLayout {
     }
 
     /**
-     * Joey asks whether to put the author, the domain or the post flair on the info line, or
-     * whether the post on the comments screen uses the feed's layout. Modern always says yes.
+     * Joey asks whether to put the author, the domain or the post flair on the info line.
+     * Modern always says yes.
      */
     public static boolean joeyLine(boolean joey) {
         return joey || modern();
@@ -2731,6 +2748,38 @@ public final class PostLayout {
 
     private static String layoutName() {
         return enumName("a", "LIST");
+    }
+
+    private static final int STYLE_TAG = 0x4d4f0049;
+    private static Method cardStyle;
+
+    /**
+     * The image style this post actually shows. On the comments screen Joey uses its own style
+     * unless "Same as above" is on (ud.b.a), so the feed's setting is not enough there.
+     */
+    private static void markStyle(View item, Object card) {
+        View thumb = find(item, "thumbnail");
+        if (thumb == null) return;
+        String name = null;
+        try {
+            if (cardStyle == null) cardStyle = Class.forName("ud.b").getMethod("a", Class.forName("jc.l"));
+            Object style = cardStyle.invoke(null, field(card, "e"));
+            if (style instanceof Enum) name = ((Enum<?>) style).name();
+        } catch (Throwable ignored) {
+        }
+        thumb.setTag(STYLE_TAG, name != null ? name : imageName());
+    }
+
+    private static String styleOf(View thumb) {
+        Object tag = thumb.getTag(STYLE_TAG);
+        return tag instanceof String ? (String) tag : imageName();
+    }
+
+    /** Joey's "Same as above": the opened post uses the feed's image style (submission_preferences). */
+    private static final String KEY_SAME_STYLE = "PREF_SAA_COMMENT_SCREENT_POST_STYLE";
+
+    private static SharedPreferences joeySubmission(Context context) {
+        return context.getSharedPreferences("submission_preferences", Context.MODE_PRIVATE);
     }
 
     private static String imageName() {

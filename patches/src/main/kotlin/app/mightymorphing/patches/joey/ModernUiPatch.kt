@@ -90,7 +90,7 @@ private val modernMotionResources = resourcePatch {
 @Suppress("unused")
 val modernUiPatch = bytecodePatch(
     name = "Modern UI",
-    description = "[v1.4.0: Post actions editor for the post bar and ⋮ menu. Full screen media, optionally opening without controls. New album viewer with thumbnails, grid and captions. Separate Modern fonts. Sidebar subreddit search keyboard fixed. Performance improvements, comparably smooth to Joey or better.] A cleaner layout for Joey, on by default, with a choice of themes. Joey's own themes and colours are off while it's on, and Classic Joey can be switched back on any time. Posts use one compact list with adjustable post style, details and images. Settings in Joey Settings - Morphe Settings.",
+    description = "[v1.4.1: Opened post image style can be changed in Morphe Settings - Appearance - Image style to match Joey stock options.] [v1.4.0: Post actions editor for the post bar and ⋮ menu. Full screen media, optionally opening without controls. New album viewer with thumbnails, grid and captions. Separate Modern fonts. Sidebar subreddit search keyboard fixed. Performance improvements, comparably smooth to Joey or better.] A cleaner layout for Joey, on by default, with a choice of themes. Joey's own themes and colours are off while it's on, and Classic Joey can be switched back on any time. Posts use one compact list with adjustable post style, details and images. Settings in Joey Settings - Morphe Settings.",
     default = true,
 ) {
     compatibleWith(JOEY)
@@ -343,9 +343,7 @@ val modernUiPatch = bytecodePatch(
             """,
         )
 
-        // The post on the comments screen uses the feed's layout in Modern.
-        val sameStyle = Fingerprint(definingClass = "Lud/b;", name = "d", returnType = "Z", parameters = listOf("Ljc/l;")).method
-        sameStyle.filterBoolean(sameStyle.indexOfReference("Lmb/o;->B()Z") + 1, joeyLine)
+        // The post on the comments screen follows Joey's own "Same as above" (offered in Image style).
 
         // The author's flair on the info line (zd.n.P reads SHOW_POST_AUTHOR_FLAIR). The post
         // flair chip above the line (zd.n.Q) stays on Joey's own Show flair switch.
