@@ -1,3 +1,9 @@
+## [1.4.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.1...v1.4.2) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* Reply button bug fix. Revised a couple of settings names and descriptions. ([20a8f62](https://github.com/ZoomSass/Mighty-Morphing/commit/20a8f620c681a993c8dc8350e5a1ab5f77b7fa1b))
+
 ## [1.4.1](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.0...v1.4.1) (2026-11-15)
 
 ### 🐛 Bug Fixes
