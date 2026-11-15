@@ -1,10 +1,10 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "patches": [
     {
       "name": "Arctic Shift restore",
-      "description": "Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.",
+      "description": "[v1.4.5: Link preview fix.] Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.",
       "default": true,
       "category": null,
       "compatiblePackages": [

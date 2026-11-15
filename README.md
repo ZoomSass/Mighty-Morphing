@@ -9,7 +9,7 @@ Click the following to add to morphe sources
 https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 
 <!-- PATCHES_START EXPANDED -->
-- <span style="color:#d85a45">**Arctic Shift restore:**</span> Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.
+- <span style="color:#d85a45">**Arctic Shift restore:**</span> [v1.4.5: Link preview fix.] Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.
 - <span style="color:#d85a45">**Backup and restore:**</span> Save Joey and Morphe settings to a file and restore them later, including splash, theme, fonts, comments, and show and hide. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.
 - <span style="color:#d85a45">**Disable tooltips:**</span> Turns off the first-run tips Joey shows.
 - <span style="color:#d85a45">**Dismiss without tearing:**</span> Swiping a photo away to close it looks smooth instead of tearing.

@@ -1,3 +1,9 @@
+## [1.4.5](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.4...v1.4.5) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* Link preview fix. ([ddcacab](https://github.com/ZoomSass/Mighty-Morphing/commit/ddcacab76cd33cc1da6af992f3f78cbef41ff481))
+
 ## [1.4.4](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.3...v1.4.4) (2026-11-15)
 
 ### 🐛 Bug Fixes
