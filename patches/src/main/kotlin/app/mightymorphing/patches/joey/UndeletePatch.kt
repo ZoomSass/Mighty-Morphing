@@ -27,10 +27,21 @@ private object PostBodyFingerprint : Fingerprint(
     parameters = listOf(),
 )
 
+/**
+ * HtmlDispaly.s: picks up to four links in a comment or post for Joey's link preview cards.
+ * The restore button is a link too, so without this it got a card that could never load.
+ */
+private object LinkPreviewPickFingerprint : Fingerprint(
+    definingClass = "Lo/o/joey/CustomViews/HtmlDispaly;",
+    name = "s",
+    returnType = "V",
+    parameters = listOf("Lorg/jsoup/nodes/f;", "Lig/d;"),
+)
+
 @Suppress("unused")
 val undeletePatch = bytecodePatch(
     name = "Arctic Shift restore",
-    description = "Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.",
+    description = "[v1.4.5: Link preview fix.] Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.",
 ) {
     compatibleWith(JOEY)
 
@@ -105,6 +116,18 @@ val undeletePatch = bytecodePatch(
             0,
             """
             invoke-static {p0, p1}, $UNDELETE->chips(Landroid/widget/TextView;Landroid/text/SpannableStringBuilder;)V
+            """,
+        )
+
+        // Link previews: the restore link's href (v4) reads as empty, which Joey already skips.
+        // v5 is set straight after, so nothing else is disturbed.
+        val pick = LinkPreviewPickFingerprint.method
+        val href = pick.indexOfReference("Lorg/jsoup/nodes/p;->a(Ljava/lang/String;)Ljava/lang/String;")
+        pick.insertAt(
+            href + 2,
+            """
+            invoke-static {v4}, $UNDELETE->previewHref(Ljava/lang/String;)Ljava/lang/String;
+            move-result-object v4
             """,
         )
 

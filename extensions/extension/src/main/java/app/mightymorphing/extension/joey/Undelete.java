@@ -162,6 +162,11 @@ public final class Undelete {
         }
     }
 
+    /** HtmlDispaly.s: the restore link never gets a link preview card. */
+    public static String previewHref(String href) {
+        return href != null && href.startsWith(SCHEME) ? "" : href;
+    }
+
     /** HTMLTextView.setSpannable: the restore link becomes a small button in the theme's link colour. */
     public static void chips(TextView view, SpannableStringBuilder text) {
         try {
