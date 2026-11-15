@@ -1,7 +1,33 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "patches": [
+    {
+      "name": "Arctic Shift restore",
+      "description": "Removed and deleted comments, and removed posts on the comments screen, get an Arctic Shift Restore button that brings back the archived text. Nothing is fetched until you tap it. Works with Modern UI or Classic. Turn it on in Joey Settings - Morphe Settings. Initial release, please report any issues or suggestions for improvements.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "o.o.joey",
+          "name": "Joey",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#FF6A00",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2.1.6.5",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
     {
       "name": "Backup and restore",
       "description": "Save Joey and Morphe settings to a file and restore them later, including splash, theme, fonts, comments, and show and hide. Log in to the same Reddit account before restoring subscriptions. Access via Joey Settings - Morphe Settings.",

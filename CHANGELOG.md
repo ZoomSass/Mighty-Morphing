@@ -1,3 +1,9 @@
+## [1.4.3](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.2...v1.4.3) (2026-11-15)
+
+### 🐛 Bug Fixes
+
+* New Arctic Shift restore patch (initial release). README credits and to be added updates. ([15aa749](https://github.com/ZoomSass/Mighty-Morphing/commit/15aa749dc03407b2f2bce18fb6b64584c8ba3a04))
+
 ## [1.4.2](https://github.com/ZoomSass/Mighty-Morphing/compare/v1.4.1...v1.4.2) (2026-11-15)
 
 ### 🐛 Bug Fixes
