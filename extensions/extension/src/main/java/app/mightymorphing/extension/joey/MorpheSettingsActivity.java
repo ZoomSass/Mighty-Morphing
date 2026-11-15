@@ -115,6 +115,18 @@ public final class MorpheSettingsActivity extends Activity {
             applyCommentRows(activity);
             column.addView(sheet);
         }
+        if (MorpheSettings.undeleteControls()) {
+            LinearLayout removed = new LinearLayout(activity);
+            removed.setOrientation(LinearLayout.VERTICAL);
+            applyCardContainer(removed, activity, density);
+            removed.setLayoutParams(cardLayoutParams(activity, density));
+            removed.addView(sectionTitle(activity, "Removed content"));
+            removed.addView(toggleRow(activity, "Restore via Arctic Shift",
+                    "Removed and deleted comments and posts get an Arctic Shift Restore button. Nothing is fetched until you tap it.",
+                    MorpheSettings.undelete(activity),
+                    (button, checked) -> MorpheSettings.saveUndelete(activity, checked)));
+            column.addView(removed);
+        }
         if (MorpheSettings.modernUiControls()) {
             LinearLayout themeCard = new LinearLayout(activity);
             themeCard.setOrientation(LinearLayout.VERTICAL);

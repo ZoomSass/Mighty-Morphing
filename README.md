@@ -35,11 +35,19 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - **Internal browser domains:** Specific domains list to always open inside Joey's internal WebView browser.
 - **Account stats:** Reactivate account age and karma indicators on posts and comments.
 - **Pinned sidebar:** A sidebar that can stay open beside the feed.
-- **Post details overflow menu:** Choose which post details stay on the line and which go in an overflow menu.
+- **Post info line overflow menu:** Choose which post details stay on the line and which go in an overflow menu.
 - **Feed UI tweaks:** Further adjustments to the feed layout.
-- **Modern UI:** Further theme enhancements. Full post style settings integration.
-- **Show and hide previews:** Live previews for the show and hide options that do not have one yet.
-- **Arctic Shift undelete:** Look up removed posts and comments through https://arctic-shift.photon-reddit.com.
+- **Modern UI:** Further theme enhancements.
+- **Show and hide previews:** Live previews for the remaining Show/Hide options.
+- **Classic support for Modern-only extras:** Downloads, image style, player buttons, hide controls on tap and swipe albums closed in Classic Joey.
+- **More link previews:** Show more than 4 link previews.
+- **Image host choice:** Upload images to a different host, for subreddits that block Reddit-hosted images.
+
+## Credits
+- **Morphe:** The patcher these patches are built for. The project began from the ReVanced patches template, later moved to the Morphe patches template.
+- **Patcheddit:** The collapsed replies fix and the login page fix are based on its patches.
+- **Infinity for Reddit:** Inline comment media reads Reddit's gallery and emoji data the same way it does.
+- **Arctic Shift** by Arthur Heitmann: Added restore functionality using Arctic Shift. https://github.com/ArthurHeitmann/arctic_shift
 
 ## License
 
