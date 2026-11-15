@@ -134,10 +134,23 @@ public final class PostLayout {
         edit.commit();
     }
 
+    /**
+     * Modern offers Full height, 16:9 and Thumbnail. Joey's Blank thumbnail and No image are moved
+     * to Thumbnail, in the feed and on the opened post ("Same as above" on).
+     */
+    private static void liftImageStyle(Context context) {
+        if (!modern()) return;
+        String name = imageName();
+        if (!"BLANK_THUMBNAIL".equals(name) && !"NO_IMAGE".equals(name)) return;
+        writeJoey("PREF_SUBMISSION_IMAGE_STYLE", "THUMBNAIL", "jc.k$b", "b");
+        joeySubmission(context).edit().putBoolean(KEY_SAME_STYLE, true).apply();
+    }
+
     private static Settings bar(Context context) {
         Settings cached = sBar;
         if (cached != null) return cached;
         migrate(context);
+        liftImageStyle(context);
         watch(context);
         Settings next = new Settings();
         next.order = Collections.unmodifiableList(barOrder(context));
@@ -296,6 +309,10 @@ public final class PostLayout {
         String current = imageName();
         int selected = "FULL_HEIGHT".equals(current) ? 0 : "_16_IS_TO_9".equals(current) ? 1
                 : "THUMBNAIL".equals(current) ? 2 : -1;
+        boolean sameNow = joeySubmission(activity).getBoolean(KEY_SAME_STYLE, false);
+        View[] thumbOnly = new View[2];
+        // Both choices wait for Save, so a style and the opened-post box can be set in one go.
+        int[] pick = {selected};
         float density = activity.getResources().getDisplayMetrics().density;
         int accent = MorpheDialog.accent(activity);
         int sub = MorpheDialog.sub(activity);
@@ -304,6 +321,7 @@ public final class PostLayout {
         cards.setOrientation(LinearLayout.HORIZONTAL);
         AlertDialog[] shown = new AlertDialog[1];
         String[] labels = {"Full height", "16:9", "Thumbnail"};
+        LinearLayout[] cardViews = new LinearLayout[3];
         for (int i = 0; i < 3; i++) {
             int index = i;
             LinearLayout card = new LinearLayout(activity);
@@ -311,53 +329,72 @@ public final class PostLayout {
             card.setGravity(Gravity.CENTER_HORIZONTAL);
             int pad = Math.round(10 * density);
             card.setPadding(pad, pad, pad, pad);
-            GradientDrawable frame = new GradientDrawable();
-            frame.setCornerRadius(12 * density);
-            frame.setColor(i == selected ? (accent & 0x00FFFFFF) | 0x22000000 : 0);
-            frame.setStroke(Math.round((i == selected ? 2 : 1) * density), i == selected ? accent : (sub & 0x00FFFFFF) | 0x66000000);
-            card.setBackground(frame);
-            card.addView(imageSketch(activity, i, i == selected ? accent : sub));
             TextView label = new TextView(activity);
             label.setText(labels[i]);
-            label.setTextColor(i == selected ? accent : MorpheDialog.text(activity));
             label.setTextSize(14);
             label.setGravity(Gravity.CENTER);
             label.setPadding(0, Math.round(8 * density), 0, 0);
             card.addView(label);
+            cardViews[i] = card;
             card.setOnClickListener(v -> {
-                String name = index == 0 ? "FULL_HEIGHT" : index == 1 ? "_16_IS_TO_9" : "THUMBNAIL";
-                writeJoey("PREF_SUBMISSION_IMAGE_STYLE", name, "jc.k$b", "b");
-                if (subtitle != null) subtitle.setText(imageBlurb());
-                if (shown[0] != null) shown[0].dismiss();
-                changed(activity);
+                pick[0] = index;
+                for (int k = 0; k < 3; k++) paintImageCard(activity, cardViews[k], k, k == pick[0], accent, sub, density);
+                for (View view : thumbOnly) if (view != null) view.setVisibility(pick[0] == 2 ? View.VISIBLE : View.GONE);
             });
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
             if (i > 0) lp.leftMargin = Math.round(8 * density);
             cards.addView(card, lp);
         }
+        for (int k = 0; k < 3; k++) paintImageCard(activity, cardViews[k], k, k == pick[0], accent, sub, density);
         page.addView(cards);
-        // Joey's own choice, kept as the user left it. Off: the opened post shows a full image.
-        CheckBox same = MorpheDialog.check(activity, "Use this style when a post is opened",
-                joeySubmission(activity).getBoolean(KEY_SAME_STYLE, false), null);
-        same.setOnCheckedChangeListener((button, checked) -> {
-            joeySubmission(activity).edit().putBoolean(KEY_SAME_STYLE, checked).apply();
-            changed(activity);
-        });
+        // Only matters with Thumbnail: the other two already show the picture in full when opened.
+        // Ticked is Joey's "Same as above" off. Joey's own choice is kept as the user left it.
+        CheckBox same = MorpheDialog.check(activity, "Show the full picture when a post is opened", !sameNow, null);
         LinearLayout.LayoutParams sameLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sameLp.topMargin = Math.round(12 * density);
         page.addView(same, sameLp);
         TextView sameNote = new TextView(activity);
-        sameNote.setText("Off shows the full picture at the top of the comments screen.");
+        sameNote.setText("Thumbnails stay in the feed. Off keeps the thumbnail on the comments screen too.");
         sameNote.setTextColor(sub);
         sameNote.setTextSize(13);
         page.addView(sameNote);
+        thumbOnly[0] = same;
+        thumbOnly[1] = sameNote;
+        for (View view : thumbOnly) view.setVisibility(pick[0] == 2 ? View.VISIBLE : View.GONE);
         TextView cancel = MorpheDialog.action(activity, "Cancel", MorpheDialog.SUB);
         cancel.setOnClickListener(v -> {
             if (shown[0] != null) shown[0].dismiss();
         });
-        page.addView(MorpheDialog.actions(activity, cancel));
+        TextView save = MorpheDialog.action(activity, "Save", MorpheDialog.GOLD);
+        save.setOnClickListener(v -> {
+            boolean styleChanged = pick[0] >= 0 && pick[0] != selected;
+            // The box is only offered with Thumbnail; otherwise the saved choice is left alone.
+            boolean sameChanged = pick[0] == 2 && !same.isChecked() != sameNow;
+            if (styleChanged) {
+                String name = pick[0] == 0 ? "FULL_HEIGHT" : pick[0] == 1 ? "_16_IS_TO_9" : "THUMBNAIL";
+                writeJoey("PREF_SUBMISSION_IMAGE_STYLE", name, "jc.k$b", "b");
+                if (subtitle != null) subtitle.setText(imageBlurb());
+            }
+            if (sameChanged) joeySubmission(activity).edit().putBoolean(KEY_SAME_STYLE, !same.isChecked()).apply();
+            if (shown[0] != null) shown[0].dismiss();
+            if (styleChanged || sameChanged) changed(activity);
+        });
+        page.addView(MorpheDialog.actions(activity, cancel, save));
         shown[0] = MorpheDialog.show(activity, page, 520);
+    }
+
+    /** One style card: outlined and tinted when picked. The sketch is redrawn in the matching colour. */
+    private static void paintImageCard(Activity activity, LinearLayout card, int style, boolean on, int accent, int sub, float density) {
+        GradientDrawable frame = new GradientDrawable();
+        frame.setCornerRadius(12 * density);
+        frame.setColor(on ? (accent & 0x00FFFFFF) | 0x22000000 : 0);
+        frame.setStroke(Math.round((on ? 2 : 1) * density), on ? accent : (sub & 0x00FFFFFF) | 0x66000000);
+        card.setBackground(frame);
+        if (card.getChildCount() > 1) card.removeViewAt(0);
+        card.addView(imageSketch(activity, style, on ? accent : sub), 0);
+        View label = card.getChildAt(card.getChildCount() - 1);
+        if (label instanceof TextView) ((TextView) label).setTextColor(on ? accent : MorpheDialog.text(activity));
     }
 
     /** A small drawing of a post: title lines, and the picture where that style puts it. */
