@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.6.0",
+  "version": "1.6.1-dev.1",
   "patches": [
     {
       "name": "Arctic Shift restore",
@@ -160,7 +160,7 @@
     },
     {
       "name": "Fix collapsed replies",
-      "description": "Loads replies that stay hidden when Reddit will not open them. Based on the Patcheddit fix.",
+      "description": "[v1.6.1 test build: Extra logging is included to help trace comments that won't load. Everything logged can be seen in Joey Settings - Morphe Settings - Report a problem. Nothing is uploaded automatically; the upload link has to be sent to the dev by you.] Loads replies that stay hidden when Reddit will not open them. Based on the Patcheddit fix.",
       "default": true,
       "category": null,
       "compatiblePackages": [
