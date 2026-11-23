@@ -11,9 +11,11 @@ private const val MORE = "Lapp/mightymorphing/extension/joey/MoreComments;"
 @Suppress("unused")
 val collapsedRepliesPatch = bytecodePatch(
     name = "Fix collapsed replies",
-    description = "Loads replies that stay hidden when Reddit will not open them. Based on the Patcheddit fix.",
+    description = "[v1.6.1 test build: Extra logging is included to help trace comments that won't load. Everything logged can be seen in Joey Settings - Morphe Settings - Report a problem. Nothing is uploaded automatically; the upload link has to be sent to the dev by you.] Loads replies that stay hidden when Reddit will not open them. Based on the Patcheddit fix.",
 ) {
     compatibleWith(JOEY)
+
+    dependsOn(problemReportPatch)
 
     execute {
         val request = MoreChildrenRequestFingerprint.method
