@@ -50,6 +50,9 @@ https://morphe.software/add-source?github=ZoomSass/Mighty-Morphing
 - **Infinity for Reddit:** Inline comment media reads Reddit's gallery and emoji data the same way it does.
 - **Arctic Shift** by Arthur Heitmann: Added restore functionality using Arctic Shift. https://github.com/ArthurHeitmann/arctic_shift
 
+## Support
+If you'd like to support the project (mostly cat treats for my coding buddy): https://ko-fi.com/zoomsass
+
 ## License
 
 Mighty Morphing Patches are licensed under the [GNU General Public License v3.0](LICENSE).
