@@ -10,3 +10,7 @@ android {
 configurations.configureEach {
     exclude(group = "org.jetbrains.kotlin")
 }
+
+dependencies {
+    testImplementation("junit:junit:4.13.2")
+}
